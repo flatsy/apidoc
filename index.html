@@ -398,6 +398,12 @@
 <ul>
 <li><a href="https://www.flatsy.fr/">https://www.flatsy.fr/</a></li>
 </ul>
+
+<p>Swagger-UI :</p>
+
+<ul>
+<li><a href="https://www.flatsy.fr/assets/lib/swagger-ui/index.html?url=https://www.flatsy.fr/swagger-public.json#/">Swagger UI (permet de tester les requêtes API)</a></li>
+</ul>
 <h1 id='authentification'>Authentification</h1>
 <p>L&#39;authentification se fait via un token JWT. Toutes les méthodes de l&#39;API nécessitent une authentification. L&#39;obtention du token se fait via un appel à l&#39; <a href="#opIduserCredsLogin">endpoint de login</a> avec votre email/password Flatsy.</p>
 
@@ -2127,7 +2133,8 @@ Accept: */*
 </span></code></pre>
 <p><code>POST /api/v1/business/property/{ref}/status</code></p>
 
-<p><em>Permet de mettre un bien en pause (empêcher temporairement la réservation de visites). Passer le champ &quot;propertyStatus&quot; à &quot;standby&quot;. Pour rétablir les visites, passer le champ &quot;propertyStatus&quot; à  &quot;available&quot;</em></p>
+<p><em>Permet de rétablir les visites pour un bien en passant le champ &quot;propertyStatus&quot; à  &quot;available&quot;.
+Permet de mettre un bien en pause (empêcher temporairement la réservation de visites) en passant le champ &quot;propertyStatus&quot; à &quot;standby&quot;.</em></p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -3456,7 +3463,12 @@ Accept: */*
 </span></code></pre>
 <p><code>POST /api/v1/business/visit/cancel</code></p>
 
-<p><em>Permet d&#39;annuler une visite pour un visiteur. A noter qu&#39;une visite peut - suivant la configuration - concerner plusieurs visiteurs. Il est donc nécessaire de préciser de quel visiteur il s&#39;agit. Les deux status possibles sont visit.status.cancelled.visitor quand le visiteur souhaite annuler, et visit.status.cancelled.owner quand le propriétaire souhaite annuler.</em></p>
+<p><em>Permet d&#39;annuler une visite. A noter qu&#39;une visite peut - suivant la configuration - concerner plusieurs visiteurs. Il est donc nécessaire de préciser de quel visiteur il s&#39;agit. Les deux status possibles sont :</em></p>
+
+<ul>
+<li><em>visit.status.cancelled.visitor quand le visiteur souhaite annuler</em></li>
+<li><em>visit.status.cancelled.owner quand le propriétaire souhaite annuler.</em></li>
+</ul>
 
 <blockquote>
 <p>Body parameter</p>
@@ -5472,9 +5484,12 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 
 <h2 id="tocSvisit">Visit</h2>
 
-<p>L&#39;objet visite contient, en plus des informations basiques (date, date de création, durée etc.. ) deux aspects principaux.
-  - VisitorVisits contient les demandes et informations concernant les visiteurs, qui peuvent être plusieurs sur une visite suivant le paramétrage
-  - PropertyVisits contient les comptes rendus de chacun des biens visités durant la visite (les biens peuvent être également plusieurs suivant le paramétrage)</p>
+<p>L&#39;objet visite contient, en plus des informations basiques (date, date de création, durée etc.. ) deux aspects principaux :</p>
+
+<ul>
+<li>VisitorVisits contient les demandes et informations concernant les visiteurs, qui peuvent être plusieurs sur une visite suivant le paramétrage</li>
+<li>PropertyVisits contient les comptes rendus de chacun des biens visités durant la visite (les biens peuvent être également plusieurs suivant le paramétrage)</li>
+</ul>
 
 <p>Ce modèle implique que certaines méthodes de l&#39;API demandent de préciser le visiteur concerné par la méthode.</p>
 
