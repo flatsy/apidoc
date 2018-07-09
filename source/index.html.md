@@ -28,6 +28,10 @@ Base URLs:
 
 * <a href="https://www.flatsy.fr/">https://www.flatsy.fr/</a>
 
+Swagger-UI :
+
+* <a href="https://www.flatsy.fr/assets/lib/swagger-ui/index.html?url=https://www.flatsy.fr/swagger-public.json#/">Swagger UI (permet de tester les requêtes API)</a>
+
 
 # Authentification
 
@@ -1322,7 +1326,8 @@ func main() {
 
 `POST /api/v1/business/property/{ref}/status`
 
-*Permet de mettre un bien en pause (empêcher temporairement la réservation de visites). Passer le champ "propertyStatus" à "standby". Pour rétablir les visites, passer le champ "propertyStatus" à  "available"*
+*Permet de rétablir les visites pour un bien en passant le champ "propertyStatus" à  "available".
+Permet de mettre un bien en pause (empêcher temporairement la réservation de visites) en passant le champ "propertyStatus" à "standby".*
 
 > Body parameter
 
@@ -2281,7 +2286,10 @@ func main() {
 
 `POST /api/v1/business/visit/cancel`
 
-*Permet d'annuler une visite pour un visiteur. A noter qu'une visite peut - suivant la configuration - concerner plusieurs visiteurs. Il est donc nécessaire de préciser de quel visiteur il s'agit. Les deux status possibles sont visit.status.cancelled.visitor quand le visiteur souhaite annuler, et visit.status.cancelled.owner quand le propriétaire souhaite annuler.*
+*Permet d'annuler une visite. A noter qu'une visite peut - suivant la configuration - concerner plusieurs visiteurs. Il est donc nécessaire de préciser de quel visiteur il s'agit. Les deux status possibles sont :*
+
+- *visit.status.cancelled.visitor quand le visiteur souhaite annuler*
+- *visit.status.cancelled.owner quand le propriétaire souhaite annuler.*
 
 > Body parameter
 
@@ -3411,7 +3419,8 @@ Notez qu'il est toujours possible d'accéder aux comptes rendus dans leur dernie
 
 <h2 id="tocSvisit">Visit</h2>
 
-L'objet visite contient, en plus des informations basiques (date, date de création, durée etc.. ) deux aspects principaux.
+L'objet visite contient, en plus des informations basiques (date, date de création, durée etc.. ) deux aspects principaux :
+
   - VisitorVisits contient les demandes et informations concernant les visiteurs, qui peuvent être plusieurs sur une visite suivant le paramétrage
   - PropertyVisits contient les comptes rendus de chacun des biens visités durant la visite (les biens peuvent être également plusieurs suivant le paramétrage)
 
