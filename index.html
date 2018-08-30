@@ -232,6 +232,9 @@
             <a href="#authentification" class="toc-h1 toc-link" data-title="Authentification">Authentification</a>
           </li>
           <li>
+            <a href="#environnement-de-test" class="toc-h1 toc-link" data-title="Environnement de test">Environnement de test</a>
+          </li>
+          <li>
             <a href="#Flatsy-API-businessuser" class="toc-h1 toc-link" data-title="User">User</a>
               <ul class="toc-list-h2">
                   <li>
@@ -298,7 +301,10 @@
                     <a href="#tocWebhookintro" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
                   </li>
                   <li>
-                    <a href="#mise-a-jour-des-comptes-rendus" class="toc-h2 toc-link" data-title="Mise à jour des comptes rendus">Mise à jour des comptes rendus</a>
+                    <a href="#fin-d-39-une-visite-et-compte-rendu" class="toc-h2 toc-link" data-title="Fin d'une visite et compte rendu">Fin d'une visite et compte rendu</a>
+                  </li>
+                  <li>
+                    <a href="#liste-exhaustive-des-evenements-declenchant-l-39-envoi-d-39-un-visitchangeevent" class="toc-h2 toc-link" data-title="Liste exhaustive des évènements déclenchant l'envoi d'un VisitChangeEvent">Liste exhaustive des évènements déclenchant l'envoi d'un VisitChangeEvent</a>
                   </li>
                   <li>
                     <a href="#tocSVisitChangeEvent" class="toc-h2 toc-link" data-title="VisitChangeEvent">VisitChangeEvent</a>
@@ -411,7 +417,8 @@
 <li><a href="https://www.flatsy.fr/assets/lib/swagger-ui/index.html?url=https://www.flatsy.fr/swagger-public.json#/">Swagger UI (permet de tester les requêtes API)</a></li>
 </ul>
 <h1 id='authentification'>Authentification</h1>
-<p>L&#39;authentification se fait via un token JWT. Toutes les méthodes de l&#39;API nécessitent une authentification. L&#39;obtention du token se fait via un appel à l&#39; <a href="#opIduserCredsLogin">endpoint de login</a> avec votre email/password Flatsy.</p>
+<p>L&#39;authentification se fait via un token JWT. Toutes les méthodes de l&#39;API nécessitent une authentification. L&#39;obtention du token se fait via un appel à l&#39; <a href="#opIduserCredsLogin">endpoint de login</a> avec votre email/password Flatsy.
+Le token expire au bout de 30 jours. Il est nécessaire de le renouveler avant l&#39;expiration ou de mettre en place une stratégie de réauthentification si vous recevez des réponses HTTP 401.</p>
 
 <p>Ce token doit être inclus dans le header <strong>X-Auth-Token</strong> afin de vous authentifier pour chacun des appels API.</p>
 
@@ -422,6 +429,44 @@
 <li>Parameter Name: <strong>X-Auth-Token</strong>, in: header.</li>
 </ul></li>
 </ul>
+<h1 id='environnement-de-test'>Environnement de test</h1>
+<p>Un environnement de test pour l&#39;API est disponible via l&#39;adresse <strong>test.flatsy.fr</strong></p>
+
+<p>Cet environnement vous permet de tester l&#39;API, et est particulièrement utile pour tester les webhooks.</p>
+
+<p>Le fonctionnement est identique à la production tel que mentionné dans cette documentation.</p>
+
+<p>Toute le cycle de vie des biens et des visites est en revanche géré de façon automatique. A la création d&#39;un bien, un agent de visite spécifique est immédiatement créé et affecté au bien. Cet agent est disponible tout le temps pour des visites.</p>
+
+<p>Pour piloter les visites et générer des évènements automatiquement envoyés sur le webhook, il s&#39;agit d&#39;entrer des numéros de téléphone spéciaux pour le visiteur lors de la création de la visite. Cela permet d&#39;envoyer les évènements désirés sur le webhook :</p>
+
+<table><thead>
+<tr>
+<th>Numéro de téléphone visiteur</th>
+<th>Comportement</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0600000000</td>
+<td>La visite est immédiatement confirmée par l&#39;agent de visite.</td>
+</tr>
+<tr>
+<td>0600000001</td>
+<td>La visite est immédiatement confirmée puis réalisée par l&#39;agent de visite, un compte rendu est ensuite rédigé.</td>
+</tr>
+<tr>
+<td>0600000002</td>
+<td>La visite est immédiatement décalée au créneau disponible suivant par l&#39;agent de visite</td>
+</tr>
+<tr>
+<td>0600000010</td>
+<td>La visite est annulée par l&#39;agent de visite</td>
+</tr>
+<tr>
+<td>0600000011</td>
+<td>La visite est annulée par le visiteur</td>
+</tr>
+</tbody></table>
 
 <h1 id="Flatsy-API-businessuser">User</h1>
 <h2 id='me'>me</h2>
@@ -700,7 +745,7 @@ Accept: */*
 </span></code></pre>
 <p><code>POST /api/v1/business/login</code></p>
 
-<p><em>Permet d&#39;obtenir votre token d&#39;authentification à l&#39;API Flatsy</em></p>
+<p><em>Permet d&#39;obtenir votre token d&#39;authentification à l&#39;API Flatsy. Le token expire au bout de 30 jours. Il est nécessaire de le renouveler avant l&#39;expiration ou de mettre en place une stratégie de réauthentification si vous recevez des réponses HTTP 401.</em></p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -4260,7 +4305,9 @@ Le Webhook vous permet de recevoir des évènements VisitChangeEvent, qui indiqu
 Les évènements sont envoyés avec une requête POST à l&#39;adresse définie, et au format JSON. Nous attendons une réponse HTTP 200 OK de la part de votre serveur.</p>
 
 <p>D&#39;une façon générale l&#39;objet visitchange témoigne de tout changement qui peut avoir lieu sur vos visites.</p>
-<h2 id='mise-a-jour-des-comptes-rendus'>Mise à jour des comptes rendus</h2>
+<h2 id='fin-d-39-une-visite-et-compte-rendu'>Fin d&#39;une visite et compte rendu</h2>
+<p>Pour chaque visite nous envoyons un code unique au visiteur. Le flatguide saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.</p>
+
 <p>Un évènement est envoyé quand la visite passe de l&#39;état confirmé (confirmed) à terminé (done). Lorsque la visite passe à l&#39;état terminé, il est possible que l&#39;agent de visite ait commencé à en rédiger le compte rendu.</p>
 
 <p><strong>Attention</strong> : en moyenne un délai de 2h est nécessaire après la visite pour que l&#39;agent rédige son compte rendu définitif. Il est donc indispensable de mettre en place une stratégie pour éviter d&#39;afficher à vos utilisateurs finaux des comptes rendus temporaires. Vous pouvez par exemple considérer que le compte rendu est un brouillon dans un délai de quelques heures après la visite.</p>
@@ -4268,6 +4315,62 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 <p>Chaque mise à jour de compte rendu donne lieu à un évènement VisitChangeEvent où seul le champ Visit est renseigné. Il est donc indispensable de mettre à jour les comptes rendus en accord avec ces évènements.</p>
 
 <p>Notez qu&#39;il est toujours possible d&#39;accéder aux comptes rendus dans leur dernier état connu en appelant l&#39;endpoint <a href="#opIdvisit">visit</a> ou <a href="#opIdvisits">visits</a></p>
+<h2 id='liste-exhaustive-des-evenements-declenchant-l-39-envoi-d-39-un-visitchangeevent'>Liste exhaustive des évènements déclenchant l&#39;envoi d&#39;un VisitChangeEvent</h2>
+<table><thead>
+<tr>
+<th>Evenement</th>
+<th>Champs envoyés</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Nouvelle visite non confirmée</td>
+<td>visit,visitor,status</td>
+</tr>
+<tr>
+<td>Nouvelle visite directement confirmée (saisie par flatguide ou par flatsy)</td>
+<td>visit, visitor, status</td>
+</tr>
+<tr>
+<td>Visite passe de demandée à confirmée (proposed  -&gt; confirmed)</td>
+<td>visit, status</td>
+</tr>
+<tr>
+<td>Visite terminée</td>
+<td>visit, visitor, status</td>
+</tr>
+<tr>
+<td>Visite change de date</td>
+<td>visit, visitor, previousDate, previousId</td>
+</tr>
+<tr>
+<td>Visite annulée par flatguide</td>
+<td>visit, status (cancelled.flatguide), oldStatus</td>
+</tr>
+<tr>
+<td>Visite annulée par client</td>
+<td>visit, status (cancelled.owner), oldStatus</td>
+</tr>
+<tr>
+<td>Visite annulée par visiteur</td>
+<td>visit, visitor, status (cancelled.visitor), oldStatus</td>
+</tr>
+<tr>
+<td>Visite annulée car bien loué/vendu</td>
+<td>visit, visitor, status (cancelled.terminated), oldStatus</td>
+</tr>
+<tr>
+<td>Compte rendu modifié</td>
+<td>visit</td>
+</tr>
+</tbody></table>
+<h3 id='cas-des-changements-de-date'>Cas des changements de date</h3>
+<p>Un changement de date de visite donne lieu à 3 évènements :</p>
+
+<ul>
+<li>Annulation de la visite originelle (cancelled.rescheduled)</li>
+<li>Modification de la visite (champs previousDate et previousId remplis), permettant de faire le lien entre les deux visites</li>
+<li>Evenement de création de la nouvelle visite</li>
+</ul>
 
 <h2 id="tocSVisitChangeEvent">VisitChangeEvent</h2>
 
