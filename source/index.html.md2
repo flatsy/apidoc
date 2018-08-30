@@ -16,75 +16,40 @@ highlight_theme: darkula
 headingLevel: 2
 
 ---
-<h1 id="Introduction">Introduction</h1>
 
-L'API Business Flatsy permet de piloter l'essemble des opérations :
+<h1 id="Flatsy-API">Flatsy API v1.0</h1>
 
-  - Pilotage des biens (disponibilités, informations, mise en pause, fin des visites)
-  - Pilotage des visites (consultation du planning des visites, modification des infos visiteur, demande de visite, annulation)
-  - Webhooks pour être notifié des évènements liés à votre compte
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
 Base URLs:
 
-* <a href="https://www.flatsy.fr/">https://www.flatsy.fr/</a>
+* <a href="//pacific.flatsy.fr/">//pacific.flatsy.fr/</a>
 
-Swagger-UI :
+License: <a href="http://licenseUrl"></a>
 
-* <a href="https://www.flatsy.fr/assets/lib/swagger-ui/index.html?url=https://www.flatsy.fr/swagger-public.json#/">Swagger UI (permet de tester les requêtes API)</a>
-
-
-# Authentification
-
-L'authentification se fait via un token JWT. Toutes les méthodes de l'API nécessitent une authentification. L'obtention du token se fait via un appel à l' [endpoint de login](#opIduserCredsLogin) avec votre email/password Flatsy.
-Le token expire au bout de 30 jours. Il est nécessaire de le renouveler avant l'expiration ou de mettre en place une stratégie de réauthentification si vous recevez des réponses HTTP 401.
-
-Ce token doit être inclus dans le header **X-Auth-Token** afin de vous authentifier pour chacun des appels API.
+# Authentication
 
 * API Key (api_key)
     - Parameter Name: **X-Auth-Token**, in: header.
 
+<h1 id="Flatsy-API-business">business</h1>
 
-# Environnement de test
+## ownerProperties
 
-Un environnement de test pour l'API est disponible via l'adresse **test.flatsy.fr**
-
-Cet environnement vous permet de tester l'API, et est particulièrement utile pour tester les webhooks.
-
-Le fonctionnement est identique à la production tel que mentionné dans cette documentation.
-
-Toute le cycle de vie des biens et des visites est en revanche géré de façon automatique. A la création d'un bien, un agent de visite spécifique est immédiatement créé et affecté au bien. Cet agent est disponible tout le temps pour des visites.
-
-Pour piloter les visites et générer des évènements automatiquement envoyés sur le webhook, il s'agit d'entrer des numéros de téléphone spéciaux pour le visiteur lors de la création de la visite. Cela permet d'envoyer les évènements désirés sur le webhook :
-
-|Numéro de téléphone visiteur|Comportement|
-|---|---|
-|0600000000|La visite est immédiatement confirmée par l'agent de visite.|
-|0600000001|La visite est immédiatement confirmée puis réalisée par l'agent de visite, un compte rendu est ensuite rédigé.|
-|0600000002|La visite est immédiatement décalée au créneau disponible suivant par l'agent de visite|
-|0600000010|La visite est annulée par l'agent de visite|
-|0600000011|La visite est annulée par le visiteur|
-
-
-
-
-<h1 id="Flatsy-API-businessuser">User</h1>
-
-## me
-
-<a id="opIdself"></a>
+<a id="opIdownerProperties"></a>
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET /www.flatsy.fr/api/v1/business/me \
+curl -X GET /pacific.flatsy.fr/api/v1/business/properties \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /www.flatsy.fr/api/v1/business/me HTTP/1.1
+GET /pacific.flatsy.fr/api/v1/business/properties HTTP/1.1
 
 Accept: */*
 
@@ -98,7 +63,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/me',
+  url: '/pacific.flatsy.fr/api/v1/business/properties',
   method: 'get',
 
   headers: headers,
@@ -118,7 +83,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/me',
+fetch('/pacific.flatsy.fr/api/v1/business/properties',
 {
   method: 'GET',
 
@@ -141,7 +106,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get 'https://wwww.flatsy.fr/api/v1/business/me',
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/properties',
   params: {
   }, headers: headers
 
@@ -156,7 +121,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('https://wwww.flatsy.fr/api/v1/business/me', params={
+r = requests.get('/pacific.flatsy.fr/api/v1/business/properties', params={
 
 }, headers = headers)
 
@@ -165,7 +130,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/me");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/properties");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -198,346 +163,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/www.flatsy.fr/api/v1/business/me", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
-`GET /api/v1/business/me`
-
-*Permet d'obtenir des informations sur votre compte client, peut également être utilisée pour contrôler la validité du token d'authentification*
-
-> Example responses
-
-> 200 Response
-
-<h3 id="self-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Client](#schemaclient)|
-
-<aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
-api_key
-</aside>
-
-## login
-
-<a id="opIduserCredsLogin"></a>
-
-> Code samples
-
-```shell
-# You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/login \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: */*' \
-  -H 'X-Auth-Token: API_KEY'
-
-```
-
-```http
-POST /www.flatsy.fr/api/v1/business/login HTTP/1.1
-
-Content-Type: application/json
-Accept: */*
-
-```
-
-```javascript
-var headers = {
-  'Content-Type':'application/json',
-  'Accept':'*/*',
-  'X-Auth-Token':'API_KEY'
-
-};
-
-$.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/login',
-  method: 'post',
-
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "identifier": "string",
-  "password": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'*/*',
-  'X-Auth-Token':'API_KEY'
-
-};
-
-fetch('https://wwww.flatsy.fr/api/v1/business/login',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => '*/*',
-  'X-Auth-Token' => 'API_KEY'
-}
-
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/login',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': '*/*',
-  'X-Auth-Token': 'API_KEY'
-}
-
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/login', params={
-
-}, headers = headers)
-
-print r.json()
-
-```
-
-```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/login");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"*/*"},
-        "X-Auth-Token": []string{"API_KEY"},
-
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/login", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
-`POST /api/v1/business/login`
-
-*Permet d'obtenir votre token d'authentification à l'API Flatsy. Le token expire au bout de 30 jours. Il est nécessaire de le renouveler avant l'expiration ou de mettre en place une stratégie de réauthentification si vous recevez des réponses HTTP 401.*
-
-> Body parameter
-
-```json
-{
-  "identifier": "string",
-  "password": "string"
-}
-```
-
-<h3 id="usercredslogin-parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[Credentials](#schemacredentials)|true|credentials|
-
-> Example responses
-
-> 200 Response
-
-<h3 id="usercredslogin-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[LoginResponse](#schemaloginresponse)|
-
-
-<h1 id="Flatsy-API-business">Property</h1>
-
-## properties
-
-<a id="properties"></a>
-
-> Code samples
-
-```shell
-# You can also use wget
-curl -X GET /www.flatsy.fr/api/v1/business/properties \
-  -H 'Accept: */*' \
-  -H 'X-Auth-Token: API_KEY'
-
-```
-
-```http
-GET /www.flatsy.fr/api/v1/business/properties HTTP/1.1
-
-Accept: */*
-
-```
-
-```javascript
-var headers = {
-  'Accept':'*/*',
-  'X-Auth-Token':'API_KEY'
-
-};
-
-$.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/properties',
-  method: 'get',
-
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept':'*/*',
-  'X-Auth-Token':'API_KEY'
-
-};
-
-fetch('https://wwww.flatsy.fr/api/v1/business/properties',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => '*/*',
-  'X-Auth-Token' => 'API_KEY'
-}
-
-result = RestClient.get 'https://wwww.flatsy.fr/api/v1/business/properties',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Accept': '*/*',
-  'X-Auth-Token': 'API_KEY'
-}
-
-r = requests.get('https://wwww.flatsy.fr/api/v1/business/properties', params={
-
-}, headers = headers)
-
-print r.json()
-
-```
-
-```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/properties");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Accept": []string{"*/*"},
-        "X-Auth-Token": []string{"API_KEY"},
-
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/www.flatsy.fr/api/v1/business/properties", data)
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/properties", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -549,7 +175,7 @@ func main() {
 
 `GET /api/v1/business/properties`
 
-*Restitue toutes les propriétés connues de Flatsy pour votre compte client*
+*all properties for a user*
 
 > Example responses
 
@@ -650,298 +276,11 @@ Status Code **200**
 |propertyStatus|property.basics.status.standby|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
-api_key
-</aside>
-
-## saveProperty
-
-<a id="opIdsaveProperty"></a>
-
-> Code samples
-
-```shell
-# You can also use wget
-curl -X POST https://www.flatsy.fr/api/v1/business/properties \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: */*' \
-  -H 'X-Auth-Token: API_KEY'
-
-```
-
-```http
-POST https://www.flatsy.fr/api/v1/business/properties HTTP/1.1
-
-Content-Type: application/json
-Accept: */*
-
-```
-
-```javascript
-var headers = {
-  'Content-Type':'application/json',
-  'Accept':'*/*',
-  'X-Auth-Token':'API_KEY'
-
-};
-
-$.ajax({
-  url: 'https://www.flatsy.fr/api/v1/business/properties',
-  method: 'post',
-
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "inCharge": "string",
-  "rentSell": "property.basics.rentsell.rent",
-  "criterias": {
-    "sharingAllowed": true,
-    "qualification": "qualification.gli"
-  },
-  "price": 0,
-  "extUrl": "string",
-  "address": {
-    "address": "string",
-    "zip": "string",
-    "city": "string",
-    "countryCode": "string",
-    "latitude": 0,
-    "longitude": 0,
-    "doorInfo": "string"
-  },
-  "doorRef": "string",
-  "picUrls": [
-    "string"
-  ],
-  "fields": {
-    "surface": 0,
-    "additionalSurfaces": [
-      {
-        "name": "string",
-        "surface": 0
-      }
-    ],
-    "numRooms": 0,
-    "numBedrooms": 0,
-    "orientation": "string",
-    "text": "string",
-    "deposit": 0,
-    "monthlyCharges": 0,
-    "agencyFee": 0,
-    "availableFrom": "string",
-    "floor": 0,
-    "heating": "string",
-    "cave": true,
-    "keeper": true,
-    "parking": true,
-    "furnished": true,
-    "leaseDurationYears": 0,
-    "works": "string",
-    "dpe": "string",
-    "constructionYear": 0
-  },
-  "externalRef": "string",
-  "additionalRefs": [
-    "string"
-  ],
-  "tenantPhone": "string",
-  "extraFields": {}
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'*/*',
-  'X-Auth-Token':'API_KEY'
-
-};
-
-fetch('https://www.flatsy.fr/api/v1/business/properties',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => '*/*',
-  'X-Auth-Token' => 'API_KEY'
-}
-
-result = RestClient.post 'https://www.flatsy.fr/api/v1/business/properties',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': '*/*',
-  'X-Auth-Token': 'API_KEY'
-}
-
-r = requests.post('https://www.flatsy.fr/api/v1/business/properties', params={
-
-}, headers = headers)
-
-print r.json()
-
-```
-
-```java
-URL obj = new URL("https://www.flatsy.fr/api/v1/business/properties");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"*/*"},
-        "X-Auth-Token": []string{"API_KEY"},
-
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://www.flatsy.fr/api/v1/business/properties", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
-`POST /api/v1/business/properties`
-
-*Permet de créer ou de mettre à jour un bien. A noter que les disponibilités de visite du bien seront par défaut à toute la semaine de 7h à 21h. Elles peuvent être modifiées via l'endpoint dédié.*
-
-> Body parameter
-
-```json
-{
-  "inCharge": "string",
-  "rentSell": "property.basics.rentsell.rent",
-  "criterias": {
-    "sharingAllowed": true,
-    "qualification": "qualification.gli"
-  },
-  "price": 0,
-  "extUrl": "string",
-  "address": {
-    "address": "string",
-    "zip": "string",
-    "city": "string",
-    "countryCode": "string",
-    "latitude": 0,
-    "longitude": 0,
-    "doorInfo": "string"
-  },
-  "doorRef": "string",
-  "picUrls": [
-    "string"
-  ],
-  "fields": {
-    "surface": 0,
-    "additionalSurfaces": [
-      {
-        "name": "string",
-        "surface": 0
-      }
-    ],
-    "numRooms": 0,
-    "numBedrooms": 0,
-    "orientation": "string",
-    "text": "string",
-    "deposit": 0,
-    "monthlyCharges": 0,
-    "agencyFee": 0,
-    "availableFrom": "string",
-    "floor": 0,
-    "heating": "string",
-    "cave": true,
-    "keeper": true,
-    "parking": true,
-    "furnished": true,
-    "leaseDurationYears": 0,
-    "works": "string",
-    "dpe": "string",
-    "constructionYear": 0
-  },
-  "externalRef": "string",
-  "additionalRefs": [
-    "string"
-  ],
-  "tenantPhone": "string",
-  "extraFields": {}
-}
-```
-
-<h3 id="saveProperty-parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[PropertySaveRequest](#schemapropertysaverequest)|true|property save request|
-
-> Example responses
-
-> 200 Response
-
-<h3 id="saveProperty-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Property](#schemaproperty)|
-
-<aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-## sendmail
+## sendViewingMail
 
 <a id="opIdsendViewingMail"></a>
 
@@ -949,7 +288,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/sendmail/{ref} \
+curl -X POST /pacific.flatsy.fr/api/v1/business/sendmail/{ref} \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -957,7 +296,7 @@ curl -X POST /www.flatsy.fr/api/v1/business/sendmail/{ref} \
 ```
 
 ```http
-POST /www.flatsy.fr/api/v1/business/sendmail/{ref} HTTP/1.1
+POST /pacific.flatsy.fr/api/v1/business/sendmail/{ref} HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -973,7 +312,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/sendmail/{ref}',
+  url: '/pacific.flatsy.fr/api/v1/business/sendmail/{ref}',
   method: 'post',
 
   headers: headers,
@@ -1000,7 +339,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/sendmail/{ref}',
+fetch('/pacific.flatsy.fr/api/v1/business/sendmail/{ref}',
 {
   method: 'POST',
   body: inputBody,
@@ -1024,7 +363,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/sendmail/{ref}',
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/sendmail/{ref}',
   params: {
   }, headers: headers
 
@@ -1040,7 +379,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/sendmail/{ref}', params={
+r = requests.post('/pacific.flatsy.fr/api/v1/business/sendmail/{ref}', params={
 
 }, headers = headers)
 
@@ -1049,7 +388,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/sendmail/{ref}");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/sendmail/{ref}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -1083,7 +422,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/sendmail/{ref}", data)
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/sendmail/{ref}", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -1095,7 +434,7 @@ func main() {
 
 `POST /api/v1/business/sendmail/{ref}`
 
-*Permet d'envoyer un email d'invitation à prendre RDV à un visiteur pour un bien.*
+*send a viewing request email to an email*
 
 > Body parameter
 
@@ -1127,26 +466,26 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|string|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-## property
+## ownerPropertyByRef
 
-<a id="opIdownerProperty"></a>
+<a id="opIdownerPropertyByRef"></a>
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET /www.flatsy.fr/api/v1/business/property \
+curl -X GET /pacific.flatsy.fr/api/v1/business/property \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /www.flatsy.fr/api/v1/business/property HTTP/1.1
+GET /pacific.flatsy.fr/api/v1/business/property HTTP/1.1
 
 Accept: */*
 
@@ -1160,7 +499,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/property',
+  url: '/pacific.flatsy.fr/api/v1/business/property',
   method: 'get',
 
   headers: headers,
@@ -1180,7 +519,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/property',
+fetch('/pacific.flatsy.fr/api/v1/business/property',
 {
   method: 'GET',
 
@@ -1203,7 +542,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get 'https://wwww.flatsy.fr/api/v1/business/property',
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/property',
   params: {
   }, headers: headers
 
@@ -1218,7 +557,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('https://wwww.flatsy.fr/api/v1/business/property', params={
+r = requests.get('/pacific.flatsy.fr/api/v1/business/property', params={
 
 }, headers = headers)
 
@@ -1227,7 +566,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/property");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/property");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -1260,7 +599,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/www.flatsy.fr/api/v1/business/property", data)
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/property", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -1272,7 +611,7 @@ func main() {
 
 `GET /api/v1/business/property`
 
-*Permet d'obtenir un bien en saisissant sa référence. Les informations renvoyés contiennent notamment le statut du bien (en ligne, terminé, en pause), ainsi que les contraintes de disponibilités pour ce bien (à ne pas confondre avec les disponibilités de visite, qui sont obtenues via l'endpoint [dispos](#))*
+*property for a user by external reference*
 
 <h3 id="ownerpropertybyref-parameters">Parameters</h3>
 
@@ -1291,11 +630,11 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Property](#schemaproperty)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-## propertyAvailability
+## updatePropertyAvailability
 
 <a id="opIdupdatePropertyAvailability"></a>
 
@@ -1303,7 +642,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X PUT /www.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227 \
+curl -X PUT /pacific.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227 \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -1311,7 +650,7 @@ curl -X PUT /www.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2
 ```
 
 ```http
-PUT /www.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227 HTTP/1.1
+PUT /pacific.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227 HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -1327,7 +666,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/property/availability',
+  url: '/pacific.flatsy.fr/api/v1/business/property/availability',
   method: 'put',
   data: '?ref=18%2F1280%2F02%2F0227',
   headers: headers,
@@ -1343,8 +682,8 @@ const request = require('node-fetch');
 const inputBody = '{
   "availability": [
     {
-      "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "start": "2018-07-09T12:27:04Z",
+      "end": "2018-07-09T12:27:04Z"
     }
   ]
 }';
@@ -1355,7 +694,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227',
+fetch('/pacific.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227',
 {
   method: 'PUT',
   body: inputBody,
@@ -1379,7 +718,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.put 'https://wwww.flatsy.fr/api/v1/business/property/availability',
+result = RestClient.put '/pacific.flatsy.fr/api/v1/business/property/availability',
   params: {
   'ref' => 'string'
 }, headers: headers
@@ -1396,7 +735,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.put('https://wwww.flatsy.fr/api/v1/business/property/availability', params={
+r = requests.put('/pacific.flatsy.fr/api/v1/business/property/availability', params={
   'ref': '18/1280/02/0227'
 }, headers = headers)
 
@@ -1405,7 +744,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/property/availability?ref=18%2F1280%2F02%2F0227");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("PUT");
 int responseCode = con.getResponseCode();
@@ -1439,7 +778,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("PUT", "/www.flatsy.fr/api/v1/business/property/availability", data)
+    req, err := http.NewRequest("PUT", "/pacific.flatsy.fr/api/v1/business/property/availability", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -1451,7 +790,7 @@ func main() {
 
 `PUT /api/v1/business/property/availability`
 
-*Met à jour les disponibilités d'une propriété*
+*update property availability*
 
 > Body parameter
 
@@ -1459,8 +798,8 @@ func main() {
 {
   "availability": [
     {
-      "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "start": "2018-07-09T12:27:04Z",
+      "end": "2018-07-09T12:27:04Z"
     }
   ]
 }
@@ -1484,7 +823,7 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Property](#schemaproperty)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
@@ -1496,7 +835,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/property/{ref}/status \
+curl -X POST /pacific.flatsy.fr/api/v1/business/property/{ref}/status \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -1504,7 +843,7 @@ curl -X POST /www.flatsy.fr/api/v1/business/property/{ref}/status \
 ```
 
 ```http
-POST /www.flatsy.fr/api/v1/business/property/{ref}/status HTTP/1.1
+POST /pacific.flatsy.fr/api/v1/business/property/{ref}/status HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -1520,7 +859,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/property/{ref}/status',
+  url: '/pacific.flatsy.fr/api/v1/business/property/{ref}/status',
   method: 'post',
 
   headers: headers,
@@ -1543,7 +882,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/property/{ref}/status',
+fetch('/pacific.flatsy.fr/api/v1/business/property/{ref}/status',
 {
   method: 'POST',
   body: inputBody,
@@ -1567,7 +906,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/property/{ref}/status',
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/property/{ref}/status',
   params: {
   }, headers: headers
 
@@ -1583,7 +922,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/property/{ref}/status', params={
+r = requests.post('/pacific.flatsy.fr/api/v1/business/property/{ref}/status', params={
 
 }, headers = headers)
 
@@ -1592,7 +931,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/property/{ref}/status");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/property/{ref}/status");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -1626,7 +965,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/property/{ref}/status", data)
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/property/{ref}/status", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -1638,8 +977,7 @@ func main() {
 
 `POST /api/v1/business/property/{ref}/status`
 
-*Permet de rétablir les visites pour un bien en passant le champ "propertyStatus" à  "available".
-Permet de mettre un bien en pause (empêcher temporairement la réservation de visites) en passant le champ "propertyStatus" à "standby".*
+*update property status*
 
 > Body parameter
 
@@ -1667,7 +1005,7 @@ Permet de mettre un bien en pause (empêcher temporairement la réservation de v
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Property](#schemaproperty)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
@@ -1679,7 +1017,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/property/{ref}/terminate \
+curl -X POST /pacific.flatsy.fr/api/v1/business/property/{ref}/terminate \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -1687,7 +1025,7 @@ curl -X POST /www.flatsy.fr/api/v1/business/property/{ref}/terminate \
 ```
 
 ```http
-POST /www.flatsy.fr/api/v1/business/property/{ref}/terminate HTTP/1.1
+POST /pacific.flatsy.fr/api/v1/business/property/{ref}/terminate HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -1703,7 +1041,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/property/{ref}/terminate',
+  url: '/pacific.flatsy.fr/api/v1/business/property/{ref}/terminate',
   method: 'post',
 
   headers: headers,
@@ -1726,7 +1064,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/property/{ref}/terminate',
+fetch('/pacific.flatsy.fr/api/v1/business/property/{ref}/terminate',
 {
   method: 'POST',
   body: inputBody,
@@ -1750,7 +1088,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/property/{ref}/terminate',
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/property/{ref}/terminate',
   params: {
   }, headers: headers
 
@@ -1766,7 +1104,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/property/{ref}/terminate', params={
+r = requests.post('/pacific.flatsy.fr/api/v1/business/property/{ref}/terminate', params={
 
 }, headers = headers)
 
@@ -1775,7 +1113,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/property/{ref}/terminate");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/property/{ref}/terminate");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -1809,7 +1147,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/property/{ref}/terminate", data)
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/property/{ref}/terminate", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -1821,7 +1159,7 @@ func main() {
 
 `POST /api/v1/business/property/{ref}/terminate`
 
-*Permet de mettre fin aux visites d'un bien. Saisir un email visiteur permet de prévenir uniquement les autres visiteurs des visites passées et futures que le bien a trouvé preneur.*
+*end viewings for a property*
 
 > Body parameter
 
@@ -1849,30 +1187,28 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Property](#schemaproperty)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-<h1 id="Flatsy-API-businessvisit">Visit</h1>
+<h1 id="Flatsy-API-businessuser">businessuser</h1>
 
-Avant de lire cette section, il est préférable de se familiariser avec le [schema de la visite](#tocSvisit)
+## self
 
-## visit
-
-<a id="opIdvisit"></a>
+<a id="opIdself"></a>
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET /www.flatsy.fr/api/v1/business/visit/{id} \
+curl -X GET /pacific.flatsy.fr/api/v1/business/me \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /www.flatsy.fr/api/v1/business/visit/{id} HTTP/1.1
+GET /pacific.flatsy.fr/api/v1/business/me HTTP/1.1
 
 Accept: */*
 
@@ -1886,7 +1222,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/visit/{id}',
+  url: '/pacific.flatsy.fr/api/v1/business/me',
   method: 'get',
 
   headers: headers,
@@ -1906,7 +1242,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/visit/{id}',
+fetch('/pacific.flatsy.fr/api/v1/business/me',
 {
   method: 'GET',
 
@@ -1929,7 +1265,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get 'https://wwww.flatsy.fr/api/v1/business/visit/{id}',
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/me',
   params: {
   }, headers: headers
 
@@ -1944,7 +1280,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('https://wwww.flatsy.fr/api/v1/business/visit/{id}', params={
+r = requests.get('/pacific.flatsy.fr/api/v1/business/me', params={
 
 }, headers = headers)
 
@@ -1953,7 +1289,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/visit/{id}");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/me");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -1986,7 +1322,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/www.flatsy.fr/api/v1/business/visit/{id}", data)
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/me", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -1996,40 +1332,34 @@ func main() {
 
 ```
 
-`GET /api/v1/business/visit/{id}`
+`GET /api/v1/business/me`
 
-*Obtient une visite par son id*
-
-<h3 id="visit-parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(uuid)|true|none|
+*get user data*
 
 > Example responses
 
 > 200 Response
 
-<h3 id="visit-responses">Responses</h3>
+<h3 id="self-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visit](#schemavisit)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Client](#schemaclient)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-## updateVisitor
+## userCredsLogin
 
-<a id="opIdupdateVisitor"></a>
+<a id="opIduserCredsLogin"></a>
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/update/visitor \
+curl -X POST /pacific.flatsy.fr/api/v1/business/login \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -2037,7 +1367,7 @@ curl -X POST /www.flatsy.fr/api/v1/business/update/visitor \
 ```
 
 ```http
-POST /www.flatsy.fr/api/v1/business/update/visitor HTTP/1.1
+POST /pacific.flatsy.fr/api/v1/business/login HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -2053,7 +1383,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/update/visitor',
+  url: '/pacific.flatsy.fr/api/v1/business/login',
   method: 'post',
 
   headers: headers,
@@ -2067,11 +1397,8 @@ $.ajax({
 ```javascript--nodejs
 const request = require('node-fetch');
 const inputBody = '{
-  "email": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "phone": "string",
-  "fields": {}
+  "identifier": "string",
+  "password": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -2080,7 +1407,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/update/visitor',
+fetch('/pacific.flatsy.fr/api/v1/business/login',
 {
   method: 'POST',
   body: inputBody,
@@ -2104,7 +1431,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/update/visitor',
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/login',
   params: {
   }, headers: headers
 
@@ -2120,7 +1447,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/update/visitor', params={
+r = requests.post('/pacific.flatsy.fr/api/v1/business/login', params={
 
 }, headers = headers)
 
@@ -2129,7 +1456,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/update/visitor");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/login");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2163,7 +1490,359 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/update/visitor", data)
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/login", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`POST /api/v1/business/login`
+
+*login with credentials*
+
+> Body parameter
+
+```json
+{
+  "identifier": "string",
+  "password": "string"
+}
+```
+
+<h3 id="usercredslogin-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[Credentials](#schemacredentials)|true|credentials|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="usercredslogin-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[LoginResponse](#schemaloginresponse)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
+
+<h1 id="Flatsy-API-businessvisit">businessvisit</h1>
+
+## visit
+
+<a id="opIdvisit"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /pacific.flatsy.fr/api/v1/business/visit/{id} \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+GET /pacific.flatsy.fr/api/v1/business/visit/{id} HTTP/1.1
+
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/visit/{id}',
+  method: 'get',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/visit/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/visit/{id}',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.get('/pacific.flatsy.fr/api/v1/business/visit/{id}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visit/{id}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/visit/{id}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`GET /api/v1/business/visit/{id}`
+
+*get a visit with*
+
+<h3 id="visit-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(uuid)|true|none|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="visit-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visit](#schemavisit)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
+
+## updateVisitor
+
+<a id="opIdupdateVisitor"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /pacific.flatsy.fr/api/v1/business/update/visitor \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+POST /pacific.flatsy.fr/api/v1/business/update/visitor HTTP/1.1
+
+Content-Type: application/json
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/update/visitor',
+  method: 'post',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "email": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "phone": "string",
+  "fields": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/update/visitor',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/update/visitor',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.post('/pacific.flatsy.fr/api/v1/business/update/visitor', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/update/visitor");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/update/visitor", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2175,7 +1854,7 @@ func main() {
 
 `POST /api/v1/business/update/visitor`
 
-*Met à jour les informations concernant un visiteur. Le champ fields peut contenir un nombre arbitraire de clé-valeurs et peut donc être utilisé pour stocker des méta-données*
+*update a visitor*
 
 > Body parameter
 
@@ -2208,7 +1887,7 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visitor](#schemavisitor)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
@@ -2220,14 +1899,14 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X GET /www.flatsy.fr/api/v1/business/visits \
+curl -X GET /pacific.flatsy.fr/api/v1/business/visits \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /www.flatsy.fr/api/v1/business/visits HTTP/1.1
+GET /pacific.flatsy.fr/api/v1/business/visits HTTP/1.1
 
 Accept: */*
 
@@ -2241,7 +1920,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/visits',
+  url: '/pacific.flatsy.fr/api/v1/business/visits',
   method: 'get',
 
   headers: headers,
@@ -2261,7 +1940,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/visits',
+fetch('/pacific.flatsy.fr/api/v1/business/visits',
 {
   method: 'GET',
 
@@ -2284,7 +1963,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get 'https://wwww.flatsy.fr/api/v1/business/visits',
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/visits',
   params: {
   }, headers: headers
 
@@ -2299,7 +1978,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('https://wwww.flatsy.fr/api/v1/business/visits', params={
+r = requests.get('/pacific.flatsy.fr/api/v1/business/visits', params={
 
 }, headers = headers)
 
@@ -2308,7 +1987,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/visits");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visits");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2341,7 +2020,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/www.flatsy.fr/api/v1/business/visits", data)
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/visits", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2353,7 +2032,7 @@ func main() {
 
 `GET /api/v1/business/visits`
 
-*Permet de rechercher dans les visites. En particulier, permet d'obtenir toutes les visites pour un bien en renseignant le paramètre ref.*
+*All visits for a client*
 
 <h3 id="visits-parameters">Parameters</h3>
 
@@ -2442,11 +2121,11 @@ Status Code **200**
 |rentSell|property.basics.rentsell.sell|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-## visitCancel
+## visitorCancel
 
 <a id="opIdvisitorCancel"></a>
 
@@ -2454,7 +2133,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/visit/cancel \
+curl -X POST /pacific.flatsy.fr/api/v1/business/visit/cancel \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -2462,7 +2141,7 @@ curl -X POST /www.flatsy.fr/api/v1/business/visit/cancel \
 ```
 
 ```http
-POST /www.flatsy.fr/api/v1/business/visit/cancel HTTP/1.1
+POST /pacific.flatsy.fr/api/v1/business/visit/cancel HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -2478,7 +2157,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/visit/cancel',
+  url: '/pacific.flatsy.fr/api/v1/business/visit/cancel',
   method: 'post',
 
   headers: headers,
@@ -2503,7 +2182,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/visit/cancel',
+fetch('/pacific.flatsy.fr/api/v1/business/visit/cancel',
 {
   method: 'POST',
   body: inputBody,
@@ -2527,7 +2206,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/visit/cancel',
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/visit/cancel',
   params: {
   }, headers: headers
 
@@ -2543,7 +2222,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/visit/cancel', params={
+r = requests.post('/pacific.flatsy.fr/api/v1/business/visit/cancel', params={
 
 }, headers = headers)
 
@@ -2552,7 +2231,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/visit/cancel");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visit/cancel");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2586,7 +2265,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/visit/cancel", data)
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/visit/cancel", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2598,10 +2277,7 @@ func main() {
 
 `POST /api/v1/business/visit/cancel`
 
-*Permet d'annuler une visite. A noter qu'une visite peut - suivant la configuration - concerner plusieurs visiteurs. Il est donc nécessaire de préciser de quel visiteur il s'agit. Les deux status possibles sont :*
-
-- *visit.status.cancelled.visitor quand le visiteur souhaite annuler*
-- *visit.status.cancelled.owner quand le propriétaire souhaite annuler.*
+*cancel a viewing for a visitor*
 
 > Body parameter
 
@@ -2630,11 +2306,194 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visitor](#schemavisitor)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
+## visitorStatusUpdate
 
+<a id="opIdvisitorStatusUpdate"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /pacific.flatsy.fr/api/v1/business/visitor/status \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+POST /pacific.flatsy.fr/api/v1/business/visitor/status HTTP/1.1
+
+Content-Type: application/json
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/visitor/status',
+  method: 'post',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "visitStatus": "visit.status.proposed",
+  "visitorId": "string",
+  "visitId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/visitor/status',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/visitor/status',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.post('/pacific.flatsy.fr/api/v1/business/visitor/status', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visitor/status");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/visitor/status", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`POST /api/v1/business/visitor/status`
+
+*change status for a visitor*
+
+> Body parameter
+
+```json
+{
+  "visitStatus": "visit.status.proposed",
+  "visitorId": "string",
+  "visitId": "string"
+}
+```
+
+<h3 id="visitorstatusupdate-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[StatusChangeRequest](#schemastatuschangerequest)|true|visitor update status|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="visitorstatusupdate-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visitor](#schemavisitor)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
 
 ## slots
 
@@ -2644,14 +2503,14 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X GET https://www.flatsy.fr/api/v1/business/visit/slots \
+curl -X GET /pacific.flatsy.fr/api/v1/business/visit/slots?propertyId=string \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET https://www.flatsy.fr/api/v1/business/visit/slots HTTP/1.1
+GET /pacific.flatsy.fr/api/v1/business/visit/slots?propertyId=string HTTP/1.1
 
 Accept: */*
 
@@ -2665,9 +2524,9 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://www.flatsy.fr/api/v1/business/visit/slots',
+  url: '/pacific.flatsy.fr/api/v1/business/visit/slots',
   method: 'get',
-
+  data: '?propertyId=string',
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2685,7 +2544,7 @@ const headers = {
 
 };
 
-fetch('https://www.flatsy.fr/api/v1/business/visit/slots',
+fetch('/pacific.flatsy.fr/api/v1/business/visit/slots?propertyId=string',
 {
   method: 'GET',
 
@@ -2708,9 +2567,10 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get 'https://www.flatsy.fr/api/v1/business/visit/slots',
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/visit/slots',
   params: {
-  }, headers: headers
+  'propertyId' => 'string(uuid)'
+}, headers: headers
 
 p JSON.parse(result)
 
@@ -2723,8 +2583,8 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('https://www.flatsy.fr/api/v1/business/visit/slots', params={
-
+r = requests.get('/pacific.flatsy.fr/api/v1/business/visit/slots', params={
+  'propertyId': 'string'
 }, headers = headers)
 
 print r.json()
@@ -2732,7 +2592,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("https://www.flatsy.fr/api/v1/business/visit/slots");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visit/slots?propertyId=string");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2765,7 +2625,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://www.flatsy.fr/api/v1/business/visit/slots", data)
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/visit/slots", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2777,14 +2637,13 @@ func main() {
 
 `GET /api/v1/business/visit/slots`
 
-*Permet d'obtenir les disponibilités de visites pour un bien. Le champ isPriority de la réponse précise si ce créneau doit être affiché de façon prioritaire. __Nous recommandons d'afficher les créneaux en deux temps à vos utilisateurs. D'abord les créneaux prioritaires, puis, si la personne n'est pas disponible, le reste des créneaux. Ainsi, on optimise la répartition des créneaux et on évite au maximum les risques d'annulation.__ A noter qu'il est nécessaire de fournir soit l'id flatsy du bien, soit votre référence unique pour ce bien*
+*visits availability for a given property*
 
 <h3 id="slots-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|propertyId|query|string(uuid)|false|property id|
-|reference|query|string|false|reference|
+|propertyId|query|string(uuid)|true|property id|
 |isReschedule|query|boolean|false|isReschedule|
 
 > Example responses
@@ -2821,7 +2680,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X POST /www.flatsy.fr/api/v1/business/visit/create \
+curl -X POST /pacific.flatsy.fr/api/v1/business/visit/create \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -2829,7 +2688,7 @@ curl -X POST /www.flatsy.fr/api/v1/business/visit/create \
 ```
 
 ```http
-POST /www.flatsy.fr/api/v1/business/visit/create HTTP/1.1
+POST /pacific.flatsy.fr/api/v1/business/visit/create HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -2845,7 +2704,7 @@ var headers = {
 };
 
 $.ajax({
-  url: 'https://wwww.flatsy.fr/api/v1/business/visit/create',
+  url: '/pacific.flatsy.fr/api/v1/business/visit/create',
   method: 'post',
 
   headers: headers,
@@ -2860,7 +2719,7 @@ $.ajax({
 const request = require('node-fetch');
 const inputBody = '{
   "propertyId": "string",
-  "date": "2018-07-09T09:05:00Z",
+  "date": "2018-07-09T12:27:04Z",
   "visitor": {
     "email": "string",
     "firstName": "string",
@@ -2877,7 +2736,7 @@ const headers = {
 
 };
 
-fetch('https://wwww.flatsy.fr/api/v1/business/visit/create',
+fetch('/pacific.flatsy.fr/api/v1/business/visit/create',
 {
   method: 'POST',
   body: inputBody,
@@ -2901,7 +2760,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post 'https://wwww.flatsy.fr/api/v1/business/visit/create',
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/visit/create',
   params: {
   }, headers: headers
 
@@ -2917,7 +2776,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('https://wwww.flatsy.fr/api/v1/business/visit/create', params={
+r = requests.post('/pacific.flatsy.fr/api/v1/business/visit/create', params={
 
 }, headers = headers)
 
@@ -2926,7 +2785,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/www.flatsy.fr/api/v1/business/visit/create");
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visit/create");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2960,7 +2819,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/www.flatsy.fr/api/v1/business/visit/create", data)
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/visit/create", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2972,14 +2831,14 @@ func main() {
 
 `POST /api/v1/business/visit/create`
 
-*Crée une nouvelle demande de visite. Le champ visitorTokenId est facultatif et ne doit pas être utilisé dans la plupart des cas.*
+*create a new visit*
 
 > Body parameter
 
 ```json
 {
   "propertyId": "string",
-  "date": "2018-07-09T09:05:00Z",
+  "date": "2018-07-09T12:27:04Z",
   "visitor": {
     "email": "string",
     "firstName": "string",
@@ -3008,100 +2867,186 @@ func main() {
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visit](#schemavisit)|
 
 <aside class="warning">
-Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
 
-# Webhook
+## available
 
-<h2 id="tocWebhookintro">Introduction</h2>
+<a id="opIdavailable"></a>
 
-<a id="webhookintro"></a>
+> Code samples
 
-Vous avez la possibilité de définir une adresse de webhook (via la page profil de votre compte et sur demande à team@flatsy.fr).
-Le Webhook vous permet de recevoir des évènements VisitChangeEvent, qui indiquent en temps réel les changements qui ont lieu sur vos visites.
-Les évènements sont envoyés avec une requête POST à l'adresse définie, et au format JSON. Nous attendons une réponse HTTP 200 OK de la part de votre serveur.
+```shell
+# You can also use wget
+curl -X GET /pacific.flatsy.fr/api/v1/business/visit/available?propertyId=string \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
 
-D'une façon générale l'objet visitchange témoigne de tout changement qui peut avoir lieu sur vos visites.
+```
 
-## Fin d'une visite et compte rendu
+```http
+GET /pacific.flatsy.fr/api/v1/business/visit/available?propertyId=string HTTP/1.1
 
-Pour chaque visite nous envoyons un code unique au visiteur. Le flatguide saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.
+Accept: */*
 
-Un évènement est envoyé quand la visite passe de l'état confirmé (confirmed) à terminé (done). Lorsque la visite passe à l'état terminé, il est possible que l'agent de visite ait commencé à en rédiger le compte rendu.
+```
 
-__Attention__ : en moyenne un délai de 2h est nécessaire après la visite pour que l'agent rédige son compte rendu définitif. Il est donc indispensable de mettre en place une stratégie pour éviter d'afficher à vos utilisateurs finaux des comptes rendus temporaires. Vous pouvez par exemple considérer que le compte rendu est un brouillon dans un délai de quelques heures après la visite.
+```javascript
+var headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
 
-Chaque mise à jour de compte rendu donne lieu à un évènement VisitChangeEvent où seul le champ Visit est renseigné. Il est donc indispensable de mettre à jour les comptes rendus en accord avec ces évènements.
+};
 
-Notez qu'il est toujours possible d'accéder aux comptes rendus dans leur dernier état connu en appelant l'endpoint [visit](#opIdvisit) ou [visits](#opIdvisits)
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/visit/available',
+  method: 'get',
+  data: '?propertyId=string',
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
 
-## Liste exhaustive des évènements déclenchant l'envoi d'un VisitChangeEvent
+```
 
-|Evenement|Champs envoyés|
-|---|---|
-| Nouvelle visite non confirmée | visit,visitor,status |
-| Nouvelle visite directement confirmée (saisie par flatguide ou par flatsy) | visit, visitor, status |
-| Visite passe de demandée à confirmée (proposed  -> confirmed) | visit, status |
-| Visite terminée | visit, visitor, status | visit, status (done), oldstatus (confirmed) |
-| Visite change de date | visit, visitor, previousDate, previousId |
-| Visite annulée par flatguide | visit, status (cancelled.flatguide), oldStatus |
-| Visite annulée par client | visit, status (cancelled.owner), oldStatus |
-| Visite annulée par visiteur | visit, visitor, status (cancelled.visitor), oldStatus |
-| Visite annulée car bien loué/vendu | visit, visitor, status (cancelled.terminated), oldStatus |
-| Compte rendu modifié | visit |
+```javascript--nodejs
+const request = require('node-fetch');
 
-### Cas des changements de date
+const headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
 
-Un changement de date de visite donne lieu à 3 évènements :
+};
 
-* Annulation de la visite originelle (cancelled.rescheduled)
-* Modification de la visite (champs previousDate et previousId remplis), permettant de faire le lien entre les deux visites
-* Evenement de création de la nouvelle visite
-
-
-
-
-<h2 id="tocSVisitChangeEvent">VisitChangeEvent</h2>
-
-<a id="schemavisitchange"></a>
-
-```json
+fetch('/pacific.flatsy.fr/api/v1/business/visit/available?propertyId=string',
 {
-  "visit": "string",
-  "visitor": "string",
-  "status": "string",
-  "oldStatus": "string",
-  "previousDate": 0,
-  "previousId": 0
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/visit/available',
+  params: {
+  'propertyId' => 'string(uuid)'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.get('/pacific.flatsy.fr/api/v1/business/visit/available', params={
+  'propertyId': 'string'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/visit/available?propertyId=string");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/visit/available", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
 }
 
 ```
 
-### Properties
+`GET /api/v1/business/visit/available`
+
+*visits availability for a given property*
+
+<h3 id="available-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|propertyId|query|string(uuid)|true|property id|
+|isReschedule|query|boolean|false|isReschedule|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="available-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|Inline|
+
+<h3 id="available-responseschema">Response Schema</h3>
+
+Status Code **200**
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|visit|[Visit](#schemavisit)|true|none| la visite dans son état __après__ le changement.|
-|visitor|[Visitor](#schemavisitor)|false|none|le visiteur concerné par l'évènement si besoin est de le préciser.|
-|status|string|false|none|le nouveau status de la visite si celui-ci a changé.|
-|oldStatus|string|false|none|l'ancien status de la visite si celui-ci a changé.|
-|previousDate|string(date-time)|false|none|la date de l'ancienne visite si cette visite correspond à un changement de date|
-|previousId|string(uuid)|false|none|l'id de l'ancienne visite si cette visite correspond à un changement de date|
+|*anonymous*|[[VisitSlot](#schemavisitslot)]|false|none|none|
+|» date|string(date-time)|false|none|none|
+|» available|boolean|true|none|none|
+|» score|number|true|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|visit.status.proposed|
-|status|visit.status.confirmed|
-|status|visit.status.cancelled.visitor|
-|status|visit.status.cancelled.owner|
-|status|visit.status.cancelled.flatguide|
-|status|visit.status.cancelled.rescheduled|
-|status|visit.status.cancelled.terminated|
-|status|visit.status.done|
-
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
 
 # Schemas
 
@@ -3133,93 +3078,6 @@ Un changement de date de visite donne lieu à 3 évènements :
 |latitude|number|true|none|none|
 |longitude|number|true|none|none|
 |doorInfo|string|false|none|none|
-
-<h2 id="tocSclient">Client</h2>
-
-<a id="schemaclient"></a>
-
-```json
-{
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "fullName": "string",
-  "shortName": "string",
-  "email": "string",
-  "phone": "string",
-  "address": {
-    "address": "string",
-    "zip": "string",
-    "city": "string",
-    "countryCode": "string",
-    "latitude": 0,
-    "longitude": 0,
-    "doorInfo": "string"
-  },
-  "photoURL": "string",
-  "phone2": "string",
-  "businessHours": "string"
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string(uuid)|true|none|none|
-|firstName|string|false|none|none|
-|lastName|string|false|none|none|
-|fullName|string|false|none|none|
-|shortName|string|false|none|none|
-|email|string|true|none|none|
-|phone|string|false|none|none|
-|address|[Address](#schemaaddress)|false|none|none|
-|photoURL|string|false|none|none|
-|phone2|string|false|none|none|
-|businessHours|string|false|none|none|
-
-<h2 id="tocSloginresponse">LoginResponse</h2>
-
-<a id="schemaloginresponse"></a>
-
-```json
-{
-  "token": "string",
-  "userId": "string",
-  "errors": [
-    "string"
-  ]
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|token|string|false|none|none|
-|userId|string(uuid)|false|none|none|
-|errors|[string]|true|none|none|
-
-<h2 id="tocScredentials">Credentials</h2>
-
-<a id="schemacredentials"></a>
-
-```json
-{
-  "identifier": "string",
-  "password": "string"
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|identifier|string|true|none|none|
-|password|string|true|none|none|
 
 <h2 id="tocScontact">Contact</h2>
 
@@ -3279,8 +3137,8 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 ```json
 {
-  "start": "2018-07-09T09:05:00Z",
-  "end": "2018-07-09T09:05:00Z"
+  "start": "2018-07-09T12:27:04Z",
+  "end": "2018-07-09T12:27:04Z"
 }
 
 ```
@@ -3310,7 +3168,7 @@ Un changement de date de visite donne lieu à 3 évènements :
     },
     "price": 0,
     "propertyStatus": "property.basics.status.available",
-    "propertyStatusUpdatedAt": "2018-07-09T09:05:00Z",
+    "propertyStatusUpdatedAt": "2018-07-09T12:27:04Z",
     "extUrl": "string",
     "address": {
       "address": "string",
@@ -3358,8 +3216,8 @@ Un changement de date de visite donne lieu à 3 évènements :
     },
     "visitAvailabilities": [
       {
-        "start": "2018-07-09T09:05:00Z",
-        "end": "2018-07-09T09:05:00Z"
+        "start": "2018-07-09T12:27:04Z",
+        "end": "2018-07-09T12:27:04Z"
       }
     ],
     "externalRef": "string",
@@ -3370,8 +3228,8 @@ Un changement de date de visite donne lieu à 3 évènements :
     "tenantPhone": "string",
     "extraFields": {}
   },
-  "createdAt": "2018-07-09T09:05:00Z",
-  "updatedAt": "2018-07-09T09:05:00Z",
+  "createdAt": "2018-07-09T12:27:04Z",
+  "updatedAt": "2018-07-09T12:27:04Z",
   "ownerContact": {
     "name": "string",
     "phone": "string",
@@ -3381,7 +3239,7 @@ Un changement de date de visite donne lieu à 3 évènements :
     "phone2": "string",
     "businessHours": "string"
   },
-  "lastViewingAt": "2018-07-09T09:05:00Z",
+  "lastViewingAt": "2018-07-09T12:27:04Z",
   "inCharge": "string",
   "viewingsPlanned": 0,
   "viewingsDone": 0
@@ -3419,7 +3277,7 @@ Un changement de date de visite donne lieu à 3 évènements :
   },
   "price": 0,
   "propertyStatus": "property.basics.status.available",
-  "propertyStatusUpdatedAt": "2018-07-09T09:05:00Z",
+  "propertyStatusUpdatedAt": "2018-07-09T12:27:04Z",
   "extUrl": "string",
   "address": {
     "address": "string",
@@ -3467,8 +3325,8 @@ Un changement de date de visite donne lieu à 3 évènements :
   },
   "visitAvailabilities": [
     {
-      "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "start": "2018-07-09T12:27:04Z",
+      "end": "2018-07-09T12:27:04Z"
     }
   ],
   "externalRef": "string",
@@ -3619,95 +3477,6 @@ Un changement de date de visite donne lieu à 3 évènements :
 |phone|string|true|none|none|
 |fields|object|false|none|custom fields|
 
-<h2 id="tocSpropertysaverequest">PropertySaveRequest</h2>
-
-<a id="schemapropertysaverequest"></a>
-
-```json
-{
-  "inCharge": "string",
-  "rentSell": "property.basics.rentsell.rent",
-  "criterias": {
-    "sharingAllowed": true,
-    "qualification": "qualification.gli"
-  },
-  "price": 0,
-  "extUrl": "string",
-  "address": {
-    "address": "string",
-    "zip": "string",
-    "city": "string",
-    "countryCode": "string",
-    "latitude": 0,
-    "longitude": 0,
-    "doorInfo": "string"
-  },
-  "doorRef": "string",
-  "picUrls": [
-    "string"
-  ],
-  "fields": {
-    "surface": 0,
-    "additionalSurfaces": [
-      {
-        "name": "string",
-        "surface": 0
-      }
-    ],
-    "numRooms": 0,
-    "numBedrooms": 0,
-    "orientation": "string",
-    "text": "string",
-    "deposit": 0,
-    "monthlyCharges": 0,
-    "agencyFee": 0,
-    "availableFrom": "string",
-    "floor": 0,
-    "heating": "string",
-    "cave": true,
-    "keeper": true,
-    "parking": true,
-    "furnished": true,
-    "leaseDurationYears": 0,
-    "works": "string",
-    "dpe": "string",
-    "constructionYear": 0
-  },
-  "externalRef": "string",
-  "additionalRefs": [
-    "string"
-  ],
-  "tenantPhone": "string",
-  "extraFields": {}
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|inCharge|string|false|none|none|
-|rentSell|string|false|none|Property rent type|
-|criterias|[Criterias](#schemacriterias)|false|none|none|
-|price|number(double)|false|none|Price|
-|extUrl|string|false|none|none|
-|address|[Address](#schemaaddress)|false|none|none|
-|doorRef|string|false|none|none|
-|picUrls|[string]|false|none|none|
-|fields|[PropertyFields](#schemapropertyfields)|false|none|none|
-|externalRef|string|true|none|none|
-|additionalRefs|[string]|false|none|none|
-|tenantPhone|string|false|none|none|
-|extraFields|object|false|none|extraFields|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|rentSell|property.basics.rentsell.rent|
-|rentSell|property.basics.rentsell.sell|
-
 <h2 id="tocSavailabilityupdaterequest">AvailabilityUpdateRequest</h2>
 
 <a id="schemaavailabilityupdaterequest"></a>
@@ -3716,8 +3485,8 @@ Un changement de date de visite donne lieu à 3 évènements :
 {
   "availability": [
     {
-      "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "start": "2018-07-09T12:27:04Z",
+      "end": "2018-07-09T12:27:04Z"
     }
   ]
 }
@@ -3771,6 +3540,93 @@ Un changement de date de visite donne lieu à 3 évènements :
 |---|---|---|---|---|
 |pickedVisitorEmail|string|false|none|none|
 
+<h2 id="tocSclient">Client</h2>
+
+<a id="schemaclient"></a>
+
+```json
+{
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "fullName": "string",
+  "shortName": "string",
+  "email": "string",
+  "phone": "string",
+  "address": {
+    "address": "string",
+    "zip": "string",
+    "city": "string",
+    "countryCode": "string",
+    "latitude": 0,
+    "longitude": 0,
+    "doorInfo": "string"
+  },
+  "photoURL": "string",
+  "phone2": "string",
+  "businessHours": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string(uuid)|true|none|none|
+|firstName|string|false|none|none|
+|lastName|string|false|none|none|
+|fullName|string|false|none|none|
+|shortName|string|false|none|none|
+|email|string|true|none|none|
+|phone|string|false|none|none|
+|address|[Address](#schemaaddress)|false|none|none|
+|photoURL|string|false|none|none|
+|phone2|string|false|none|none|
+|businessHours|string|false|none|none|
+
+<h2 id="tocSloginresponse">LoginResponse</h2>
+
+<a id="schemaloginresponse"></a>
+
+```json
+{
+  "token": "string",
+  "userId": "string",
+  "errors": [
+    "string"
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|token|string|false|none|none|
+|userId|string(uuid)|false|none|none|
+|errors|[string]|true|none|none|
+
+<h2 id="tocScredentials">Credentials</h2>
+
+<a id="schemacredentials"></a>
+
+```json
+{
+  "identifier": "string",
+  "password": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|identifier|string|true|none|none|
+|password|string|true|none|none|
+
 <h2 id="tocSpropertysummary">PropertySummary</h2>
 
 <a id="schemapropertysummary"></a>
@@ -3819,7 +3675,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 {
   "propertyId": "string",
   "visitId": "string",
-  "readAt": "2018-07-09T09:05:00Z",
+  "readAt": "2018-07-09T12:27:04Z",
   "note": "string",
   "comment": "string",
   "positivePoints": "string",
@@ -3846,28 +3702,20 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 <h2 id="tocSvisit">Visit</h2>
 
-L'objet visite contient, en plus des informations basiques (date, date de création, durée etc.. ) deux aspects principaux :
-
-  - VisitorVisits contient les demandes et informations concernant les visiteurs, qui peuvent être plusieurs sur une visite suivant le paramétrage
-  - PropertyVisits contient les comptes rendus de chacun des biens visités durant la visite (les biens peuvent être également plusieurs suivant le paramétrage)
-
-Ce modèle implique que certaines méthodes de l'API demandent de préciser le visiteur concerné par la méthode.
-
-
 <a id="schemavisit"></a>
 
 ```json
 {
   "id": "string",
-  "date": "2018-07-09T09:05:00Z",
-  "createdAt": "2018-07-09T09:05:00Z",
+  "date": "2018-07-09T12:27:04Z",
+  "createdAt": "2018-07-09T12:27:04Z",
   "flatguideId": "string",
   "code": "string",
   "propertyVisits": [
     {
       "propertyId": "string",
       "visitId": "string",
-      "readAt": "2018-07-09T09:05:00Z",
+      "readAt": "2018-07-09T12:27:04Z",
       "note": "string",
       "comment": "string",
       "positivePoints": "string",
@@ -3881,7 +3729,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
       "visitId": "string",
       "askedPropertyId": "string",
       "status": "visit.status.proposed",
-      "initialDate": "2018-07-09T09:05:00Z",
+      "initialDate": "2018-07-09T12:27:04Z",
       "rating": 0,
       "comment": "string",
       "visitor": {
@@ -3895,7 +3743,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
       "fileHandles": [
         "string"
       ],
-      "statusUpdatedAt": "2018-07-09T09:05:00Z"
+      "statusUpdatedAt": "2018-07-09T12:27:04Z"
     }
   ],
   "propertySummary": {
@@ -3937,7 +3785,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
   "visitId": "string",
   "askedPropertyId": "string",
   "status": "visit.status.proposed",
-  "initialDate": "2018-07-09T09:05:00Z",
+  "initialDate": "2018-07-09T12:27:04Z",
   "rating": 0,
   "comment": "string",
   "visitor": {
@@ -3951,7 +3799,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
   "fileHandles": [
     "string"
   ],
-  "statusUpdatedAt": "2018-07-09T09:05:00Z"
+  "statusUpdatedAt": "2018-07-09T12:27:04Z"
 }
 
 ```
@@ -4009,8 +3857,14 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 
 |Property|Value|
 |---|---|
+|visitStatus|visit.status.proposed|
+|visitStatus|visit.status.confirmed|
 |visitStatus|visit.status.cancelled.visitor|
 |visitStatus|visit.status.cancelled.owner|
+|visitStatus|visit.status.cancelled.flatguide|
+|visitStatus|visit.status.cancelled.rescheduled|
+|visitStatus|visit.status.cancelled.terminated|
+|visitStatus|visit.status.done|
 
 <h2 id="tocSstatuschangerequest">StatusChangeRequest</h2>
 
@@ -4046,15 +3900,15 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |visitStatus|visit.status.cancelled.terminated|
 |visitStatus|visit.status.done|
 
-<h2 id="tocSvisitslot">VisitSlot</h2>
+<h2 id="tocSviewingslot">ViewingSlot</h2>
 
-<a id="schemavisitslot"></a>
+<a id="schemaviewingslot"></a>
 
 ```json
 {
-  "date": "2018-07-09T09:05:00Z",
+  "date": "2018-07-09T12:27:04Z",
   "available": true,
-  "score": 0
+  "isPriority": true
 }
 
 ```
@@ -4065,7 +3919,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |---|---|---|---|---|
 |date|string(date-time)|false|none|none|
 |available|boolean|true|none|none|
-|score|number|true|none|none|
+|isPriority|boolean|true|none|none|
 
 <h2 id="tocSvisitcreaterequest">VisitCreateRequest</h2>
 
@@ -4074,7 +3928,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 ```json
 {
   "propertyId": "string",
-  "date": "2018-07-09T09:05:00Z",
+  "date": "2018-07-09T12:27:04Z",
   "visitor": {
     "email": "string",
     "firstName": "string",
@@ -4095,3 +3949,24 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |date|string(date-time)|false|none|none|
 |visitor|[Visitor](#schemavisitor)|true|none|none|
 |visitorTokenId|string(uuid)|false|none|none|
+
+<h2 id="tocSvisitslot">VisitSlot</h2>
+
+<a id="schemavisitslot"></a>
+
+```json
+{
+  "date": "2018-07-09T12:27:04Z",
+  "available": true,
+  "score": 0
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|date|string(date-time)|false|none|none|
+|available|boolean|true|none|none|
+|score|number|true|none|none|
