@@ -48,6 +48,12 @@ Ce token doit être inclus dans le header **X-Auth-Token** afin de vous authenti
 
 Un environnement de test pour l'API est disponible via l'adresse **test.flatsy.fr**
 
+La création d'un compte test est possible à l'URL : <a href="https://test.flatsy.fr/pro/signup" target="\_blank">https://test.flatsy.fr/pro/signup</a>
+
+Si vous souhaitez utiliser une adresse de webhook, vous pourrez alors immédiatement saisir un webhook de test à l'adresse <a href="https://test.flatsy.fr/user/edit" target="\_blank">https://test.flatsy.fr/user/edit</a> une fois connecté.
+
+*NB : en production, l'activation du webhook se fait par demande expresse à l'équipe Flatsy.*
+
 Cet environnement vous permet de tester l'API, et est particulièrement utile pour tester les webhooks.
 
 Le fonctionnement est identique à la production tel que mentionné dans cette documentation.
