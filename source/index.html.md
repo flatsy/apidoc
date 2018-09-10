@@ -947,6 +947,170 @@ To perform this operation, you must be authenticated by means of one of the foll
 api_key
 </aside>
 
+## agentByPropertyRef
+
+<a id="opIdagentByPropertyRef"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /pacific.flatsy.fr/api/v1/business/property/agent \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+GET /pacific.flatsy.fr/api/v1/business/property/agent HTTP/1.1
+
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/property/agent',
+  method: 'get',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/property/agent',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/property/agent',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.get('/pacific.flatsy.fr/api/v1/business/property/agent', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/property/agent");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/property/agent", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`GET /api/v1/business/property/agent`
+
+*Renvoie les informations sur l'agent en charge de ce bien*
+
+<h3 id="agentbypropertyref-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|ref|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="agentbypropertyref-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[AgentInfo](#schemaagentinfo)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
+
 ## sendmail
 
 <a id="opIdsendViewingMail"></a>
@@ -1136,6 +1300,11 @@ func main() {
 Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
 api_key
 </aside>
+
+
+
+
+
 
 ## property
 
@@ -1859,9 +2028,736 @@ Cette action nécessite d'être authentifié. Consultez la section Authentificat
 api_key
 </aside>
 
+## coverage
+
+<a id="opIdcoverage"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /pacific.flatsy.fr/api/v1/business/coverage \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+GET /pacific.flatsy.fr/api/v1/business/coverage HTTP/1.1
+
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/coverage',
+  method: 'get',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/coverage',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/coverage',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.get('/pacific.flatsy.fr/api/v1/business/coverage', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/coverage");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/coverage", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`GET /api/v1/business/coverage`
+
+*Permet d'obtenir une liste de codes postaux où Flatsy est présent. Il est possible de confier des visites à Flatsy sur ls codes postaux envoyés par cette méthode. Pour tout autre secteur, veuillez vous adresser à l'équipe Flatsy (team@flatsy.fr).*
+
+> Example responses
+
+> 200 Response
+
+<h3 id="coverage-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|Inline|
+
+<h3 id="coverage-responseschema">Response Schema</h3>
+
+<aside class="warning">
+Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+api_key
+</aside>
+
+<h1 id="Flatsy-API-businessmessage">Messagerie</h1>
+
+## messages
+
+<a id="opIdbusinessMessages"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /pacific.flatsy.fr/api/v1/business/messages \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+GET /pacific.flatsy.fr/api/v1/business/messages HTTP/1.1
+
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/messages',
+  method: 'get',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/messages',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/messages',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.get('/pacific.flatsy.fr/api/v1/business/messages', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/messages");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/messages", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`GET /api/v1/business/messages`
+
+*Renvoie tous les messages à propos de tous les biens confiés à Flatsy*
+
+> Example responses
+
+> 200 Response
+
+<h3 id="businessmessages-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|Inline|
+
+<h3 id="businessmessages-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Conversation](#schemaconversation)]|false|none|none|
+|» id|string(uuid)|true|none|none|
+|» propertySummary|[PropertySummary](#schemapropertysummary)|true|none|none|
+|»» id|string(uuid)|false|none|none|
+|»» displayAddress|string|true|none|none|
+|»» pictureUrl|string|false|none|none|
+|»» ownerPictureUrl|string|false|none|none|
+|»» latitude|number(double)|true|none|none|
+|»» longitude|number(double)|true|none|none|
+|»» externalRef|string|false|none|none|
+|»» doorNumber|string|false|none|none|
+|»» rentSell|string|false|none|Property rent or sell|
+|» messages|[[Message](#schemamessage)]|true|none|none|
+|»» id|string(uuid)|true|none|none|
+|»» senderId|string(uuid)|false|none|none|
+|»» recipientId|string(uuid)|false|none|none|
+|»» text|string|true|none|none|
+|»» propertyId|string(uuid)|false|none|none|
+|»» propertyRef|string|false|none|none|
+|»» createdAt|string(date-time)|false|none|none|
+|»» readAt|string(date-time)|false|none|none|
+|»» senderContact|[Contact](#schemacontact)|true|none|none|
+|»»» name|string|true|none|none|
+|»»» phone|string|false|none|none|
+|»»» email|string|false|none|none|
+|»»» pictureUrl|string|false|none|none|
+|»»» displayAddress|string|false|none|none|
+|»»» phone2|string|false|none|none|
+|»»» businessHours|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|rentSell|property.basics.rentsell.rent|
+|rentSell|property.basics.rentsell.sell|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
+
+
+## conversation
+
+<a id="opIdconversation"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /pacific.flatsy.fr/api/v1/business/messages/conversation \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+GET /pacific.flatsy.fr/api/v1/business/messages/conversation HTTP/1.1
+
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/messages/conversation',
+  method: 'get',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/messages/conversation',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.get '/pacific.flatsy.fr/api/v1/business/messages/conversation',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.get('/pacific.flatsy.fr/api/v1/business/messages/conversation', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/messages/conversation");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/messages/conversation", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`GET /api/v1/business/messages/conversation`
+
+*conversation with a user*
+
+Renvoie la conversation à propos d'un bien avec l'agent de visite. Il est nécessaire de préciser soit un id de bien soit une référence client.
+
+<h3 id="conversation-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|propertyId|query|string(uuid)|false|with property id|
+|propertyRef|query|string|false|with property ref|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="conversation-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Conversation](#schemaconversation)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
+
+## save
+
+<a id="opIdsave"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /pacific.flatsy.fr/api/v1/business/messages/save \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+POST /pacific.flatsy.fr/api/v1/business/messages/save HTTP/1.1
+
+Content-Type: application/json
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: '/pacific.flatsy.fr/api/v1/business/messages/save',
+  method: 'post',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "text": "string",
+  "propertyId": "string",
+  "propertyRef": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+fetch('/pacific.flatsy.fr/api/v1/business/messages/save',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => '*/*',
+  'X-Auth-Token' => 'API_KEY'
+}
+
+result = RestClient.post '/pacific.flatsy.fr/api/v1/business/messages/save',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': '*/*',
+  'X-Auth-Token': 'API_KEY'
+}
+
+r = requests.post('/pacific.flatsy.fr/api/v1/business/messages/save', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```java
+URL obj = new URL("/pacific.flatsy.fr/api/v1/business/messages/save");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"*/*"},
+        "X-Auth-Token": []string{"API_KEY"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/messages/save", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`POST /api/v1/business/messages/save`
+
+*Permet d'envoyer un message*
+
+> Body parameter
+
+```json
+{
+  "text": "string",
+  "propertyId": "string",
+  "propertyRef": "string"
+}
+```
+
+<h3 id="save-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[MessagePost](#schemamessagepost)|true|message save|
+
+> Example responses
+
+> 200 Response
+
+<h3 id="save-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Message](#schemamessage)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+api_key
+</aside>
+
+
+
+<h1 id="Flatsy-API-businessvisit">businessvisit</h1>
+
+
+
+
 <h1 id="Flatsy-API-businessvisit">Visit</h1>
 
 Avant de lire cette section, il est préférable de se familiariser avec le [schema de la visite](#tocSvisit)
+
+
+
+
 
 ## visit
 
@@ -3195,7 +4091,8 @@ Un changement de date de visite donne lieu à 3 évènements :
   "userId": "string",
   "errors": [
     "string"
-  ]
+  ],
+  "expiration": "string"
 }
 
 ```
@@ -3207,6 +4104,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 |token|string|false|none|none|
 |userId|string(uuid)|false|none|none|
 |errors|[string]|true|none|none|
+|expiration|string|false|none|none|
 
 <h2 id="tocScredentials">Credentials</h2>
 
@@ -3262,10 +4160,8 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 ```json
 {
-  "pinel": true,
   "sharingAllowed": true,
-  "gli": true,
-  "actionLogement": true
+  "qualification": "qualification.gli"
 }
 
 ```
@@ -3274,10 +4170,23 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|pinel|boolean|false|none|none|
 |sharingAllowed|boolean|false|none|none|
-|gli|boolean|false|none|none|
-|actionLogement|boolean|false|none|none|
+|qualification|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|qualification|qualification.gli|
+|qualification|qualification.gli.hard|
+|qualification|qualification.pinel|
+|qualification|qualification.gli.pinel|
+|qualification|qualification.action.logement|
+|qualification|qualification.pls|
+|qualification|qualification.cadre|
+|qualification|qualification.fonciere.paris.cat130|
+|qualification|qualification.solvabilite33.caution|
+|qualification|qualification.solvabilite33|
 
 <h2 id="tocSflatsyinterval">FlatsyInterval</h2>
 
@@ -3285,8 +4194,8 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 ```json
 {
-  "start": "2018-07-09T09:05:00Z",
-  "end": "2018-07-09T09:05:00Z"
+  "start": "2018-09-10T16:44:29Z",
+  "end": "2018-09-10T16:44:29Z"
 }
 
 ```
@@ -3309,14 +4218,12 @@ Un changement de date de visite donne lieu à 3 évènements :
   "data": {
     "rentSell": "property.basics.rentsell.rent",
     "criterias": {
-      "pinel": true,
       "sharingAllowed": true,
-      "gli": true,
-      "actionLogement": true
+      "qualification": "qualification.gli"
     },
     "price": 0,
     "propertyStatus": "property.basics.status.available",
-    "propertyStatusUpdatedAt": "2018-07-09T09:05:00Z",
+    "propertyStatusUpdatedAt": "2018-09-10T16:44:29Z",
     "extUrl": "string",
     "address": {
       "address": "string",
@@ -3364,8 +4271,8 @@ Un changement de date de visite donne lieu à 3 évènements :
     },
     "visitAvailabilities": [
       {
-        "start": "2018-07-09T09:05:00Z",
-        "end": "2018-07-09T09:05:00Z"
+        "start": "2018-09-10T16:44:29Z",
+        "end": "2018-09-10T16:44:29Z"
       }
     ],
     "externalRef": "string",
@@ -3376,8 +4283,8 @@ Un changement de date de visite donne lieu à 3 évènements :
     "tenantPhone": "string",
     "extraFields": {}
   },
-  "createdAt": "2018-07-09T09:05:00Z",
-  "updatedAt": "2018-07-09T09:05:00Z",
+  "createdAt": "2018-09-10T16:44:29Z",
+  "updatedAt": "2018-09-10T16:44:29Z",
   "ownerContact": {
     "name": "string",
     "phone": "string",
@@ -3387,7 +4294,7 @@ Un changement de date de visite donne lieu à 3 évènements :
     "phone2": "string",
     "businessHours": "string"
   },
-  "lastViewingAt": "2018-07-09T09:05:00Z",
+  "lastViewingAt": "2018-09-10T16:44:29Z",
   "inCharge": "string",
   "viewingsPlanned": 0,
   "viewingsDone": 0
@@ -3418,14 +4325,12 @@ Un changement de date de visite donne lieu à 3 évènements :
 {
   "rentSell": "property.basics.rentsell.rent",
   "criterias": {
-    "pinel": true,
     "sharingAllowed": true,
-    "gli": true,
-    "actionLogement": true
+    "qualification": "qualification.gli"
   },
   "price": 0,
   "propertyStatus": "property.basics.status.available",
-  "propertyStatusUpdatedAt": "2018-07-09T09:05:00Z",
+  "propertyStatusUpdatedAt": "2018-09-10T16:44:29Z",
   "extUrl": "string",
   "address": {
     "address": "string",
@@ -3473,8 +4378,8 @@ Un changement de date de visite donne lieu à 3 évènements :
   },
   "visitAvailabilities": [
     {
-      "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "start": "2018-09-10T16:44:29Z",
+      "end": "2018-09-10T16:44:29Z"
     }
   ],
   "externalRef": "string",
@@ -3600,6 +4505,27 @@ Un changement de date de visite donne lieu à 3 évènements :
 |name|string|true|none|none|
 |surface|number|true|none|none|
 
+<h2 id="tocSagentinfo">AgentInfo</h2>
+
+<a id="schemaagentinfo"></a>
+
+```json
+{
+  "name": "string",
+  "presentation": "string",
+  "rating": 0
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|name|string|true|none|none|
+|presentation|string|true|none|none|
+|rating|number(double)|true|none|none|
+
 <h2 id="tocSvisitor">Visitor</h2>
 
 <a id="schemavisitor"></a>
@@ -3722,8 +4648,8 @@ Un changement de date de visite donne lieu à 3 évènements :
 {
   "availability": [
     {
-      "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "start": "2018-09-10T16:44:29Z",
+      "end": "2018-09-10T16:44:29Z"
     }
   ]
 }
@@ -3777,6 +4703,98 @@ Un changement de date de visite donne lieu à 3 évènements :
 |---|---|---|---|---|
 |pickedVisitorEmail|string|false|none|none|
 
+<h2 id="tocSconversation">Conversation</h2>
+
+<a id="schemaconversation"></a>
+
+```json
+{
+  "id": "string",
+  "propertySummary": {
+    "id": "string",
+    "displayAddress": "string",
+    "pictureUrl": "string",
+    "ownerPictureUrl": "string",
+    "latitude": 0,
+    "longitude": 0,
+    "externalRef": "string",
+    "doorNumber": "string",
+    "rentSell": "property.basics.rentsell.rent"
+  },
+  "messages": [
+    {
+      "id": "string",
+      "senderId": "string",
+      "recipientId": "string",
+      "text": "string",
+      "propertyId": "string",
+      "propertyRef": "string",
+      "createdAt": "2018-09-10T16:44:29Z",
+      "readAt": "2018-09-10T16:44:29Z",
+      "senderContact": {
+        "name": "string",
+        "phone": "string",
+        "email": "string",
+        "pictureUrl": "string",
+        "displayAddress": "string",
+        "phone2": "string",
+        "businessHours": "string"
+      }
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string(uuid)|true|none|none|
+|propertySummary|[PropertySummary](#schemapropertysummary)|true|none|none|
+|messages|[[Message](#schemamessage)]|true|none|none|
+
+<h2 id="tocSmessage">Message</h2>
+
+<a id="schemamessage"></a>
+
+```json
+{
+  "id": "string",
+  "senderId": "string",
+  "recipientId": "string",
+  "text": "string",
+  "propertyId": "string",
+  "propertyRef": "string",
+  "createdAt": "2018-09-10T16:44:29Z",
+  "readAt": "2018-09-10T16:44:29Z",
+  "senderContact": {
+    "name": "string",
+    "phone": "string",
+    "email": "string",
+    "pictureUrl": "string",
+    "displayAddress": "string",
+    "phone2": "string",
+    "businessHours": "string"
+  }
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string(uuid)|true|none|none|
+|senderId|string(uuid)|false|none|none|
+|recipientId|string(uuid)|false|none|none|
+|text|string|true|none|none|
+|propertyId|string(uuid)|false|none|none|
+|propertyRef|string|false|none|none|
+|createdAt|string(date-time)|false|none|none|
+|readAt|string(date-time)|false|none|none|
+|senderContact|[Contact](#schemacontact)|true|none|none|
+
 <h2 id="tocSpropertysummary">PropertySummary</h2>
 
 <a id="schemapropertysummary"></a>
@@ -3825,7 +4843,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 {
   "propertyId": "string",
   "visitId": "string",
-  "readAt": "2018-07-09T09:05:00Z",
+  "readAt": "2018-09-10T16:44:29Z",
   "note": "string",
   "comment": "string",
   "positivePoints": "string",
@@ -3865,15 +4883,15 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 ```json
 {
   "id": "string",
-  "date": "2018-07-09T09:05:00Z",
-  "createdAt": "2018-07-09T09:05:00Z",
+  "date": "2018-09-10T16:44:29Z",
+  "createdAt": "2018-09-10T16:44:29Z",
   "flatguideId": "string",
   "code": "string",
   "propertyVisits": [
     {
       "propertyId": "string",
       "visitId": "string",
-      "readAt": "2018-07-09T09:05:00Z",
+      "readAt": "2018-09-10T16:44:29Z",
       "note": "string",
       "comment": "string",
       "positivePoints": "string",
@@ -3887,7 +4905,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
       "visitId": "string",
       "askedPropertyId": "string",
       "status": "visit.status.proposed",
-      "initialDate": "2018-07-09T09:05:00Z",
+      "initialDate": "2018-09-10T16:44:29Z",
       "rating": 0,
       "comment": "string",
       "visitor": {
@@ -3901,7 +4919,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
       "fileHandles": [
         "string"
       ],
-      "statusUpdatedAt": "2018-07-09T09:05:00Z"
+      "statusUpdatedAt": "2018-09-10T16:44:29Z"
     }
   ],
   "propertySummary": {
@@ -3943,7 +4961,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
   "visitId": "string",
   "askedPropertyId": "string",
   "status": "visit.status.proposed",
-  "initialDate": "2018-07-09T09:05:00Z",
+  "initialDate": "2018-09-10T16:44:29Z",
   "rating": 0,
   "comment": "string",
   "visitor": {
@@ -3957,7 +4975,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
   "fileHandles": [
     "string"
   ],
-  "statusUpdatedAt": "2018-07-09T09:05:00Z"
+  "statusUpdatedAt": "2018-09-10T16:44:29Z"
 }
 
 ```
@@ -4015,8 +5033,14 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 
 |Property|Value|
 |---|---|
+|visitStatus|visit.status.proposed|
+|visitStatus|visit.status.confirmed|
 |visitStatus|visit.status.cancelled.visitor|
 |visitStatus|visit.status.cancelled.owner|
+|visitStatus|visit.status.cancelled.flatguide|
+|visitStatus|visit.status.cancelled.rescheduled|
+|visitStatus|visit.status.cancelled.terminated|
+|visitStatus|visit.status.done|
 
 <h2 id="tocSstatuschangerequest">StatusChangeRequest</h2>
 
@@ -4052,13 +5076,69 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |visitStatus|visit.status.cancelled.terminated|
 |visitStatus|visit.status.done|
 
+<h2 id="tocSviewingslot">ViewingSlot</h2>
+
+<a id="schemaviewingslot"></a>
+
+```json
+{
+  "date": "2018-09-10T16:44:29Z",
+  "available": true,
+  "isPriority": true
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|date|string(date-time)|false|none|none|
+|available|boolean|true|none|none|
+|isPriority|boolean|true|none|none|
+
+<h2 id="tocSvisitcreaterequest">VisitCreateRequest</h2>
+
+<a id="schemavisitcreaterequest"></a>
+
+```json
+{
+  "propertyId": "string",
+  "ref": "string",
+  "date": "2018-09-10T16:44:29Z",
+  "visitor": {
+    "email": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "phone": "string",
+    "fields": {}
+  },
+  "visitorTokenId": "string",
+  "clientId": "string",
+  "initialDate": "2018-09-10T16:44:29Z"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|propertyId|string(uuid)|false|none|none|
+|ref|string|false|none|none|
+|date|string(date-time)|false|none|none|
+|visitor|[Visitor](#schemavisitor)|true|none|none|
+|visitorTokenId|string(uuid)|false|none|none|
+|clientId|string(uuid)|false|none|none|
+|initialDate|string(date-time)|false|none|none|
+
 <h2 id="tocSvisitslot">VisitSlot</h2>
 
 <a id="schemavisitslot"></a>
 
 ```json
 {
-  "date": "2018-07-09T09:05:00Z",
+  "date": "2018-09-10T16:44:29Z",
   "available": true,
   "score": 0
 }
@@ -4073,22 +5153,15 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |available|boolean|true|none|none|
 |score|number|true|none|none|
 
-<h2 id="tocSvisitcreaterequest">VisitCreateRequest</h2>
+<h2 id="tocSmessagepost">MessagePost</h2>
 
-<a id="schemavisitcreaterequest"></a>
+<a id="schemamessagepost"></a>
 
 ```json
 {
+  "text": "string",
   "propertyId": "string",
-  "date": "2018-07-09T09:05:00Z",
-  "visitor": {
-    "email": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "phone": "string",
-    "fields": {}
-  },
-  "visitorTokenId": "string"
+  "propertyRef": "string"
 }
 
 ```
@@ -4097,7 +5170,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|propertyId|string(uuid)|true|none|none|
-|date|string(date-time)|false|none|none|
-|visitor|[Visitor](#schemavisitor)|true|none|none|
-|visitorTokenId|string(uuid)|false|none|none|
+|text|string|true|none|none|
+|propertyId|string(uuid)|false|none|none|
+|propertyRef|string|false|none|none|
+
