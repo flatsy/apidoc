@@ -315,6 +315,9 @@
                   <li>
                     <a href="#visitcreate" class="toc-h2 toc-link" data-title="visitCreate">visitCreate</a>
                   </li>
+                  <li>
+                    <a href="#visitupdate" class="toc-h2 toc-link" data-title="visitUpdate">visitUpdate</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -423,6 +426,9 @@
                   </li>
                   <li>
                     <a href="#tocSmessagepost" class="toc-h2 toc-link" data-title="MessagePost">MessagePost</a>
+                  </li>
+                  <li>
+                    <a href="#tocSvisitreschedulerequest" class="toc-h2 toc-link" data-title="VisitRescheduleRequest">VisitRescheduleRequest</a>
                   </li>
               </ul>
           </li>
@@ -5342,7 +5348,7 @@ Accept: */*
 </span></code></pre>
 <p><code>POST /api/v1/business/visit/create</code></p>
 
-<p><em>Crée une nouvelle demande de visite. Le champ visitorTokenId est facultatif et ne doit pas être utilisé dans la plupart des cas.</em></p>
+<p><em>Crée une nouvelle demande de visite. Le champ visitorTokenId est facultatif et ne doit pas être utilisé dans la plupart des cas. Attention les dates sont au format UTC</em></p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -5387,6 +5393,102 @@ Accept: */*
 </blockquote>
 
 <h3 id="visitcreate-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>successful operation</td>
+<td><a href="#schemavisit">Visit</a></td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+api_key
+</aside>
+<h2 id='visitupdate'>visitUpdate</h2>
+<p><a id="opIdvisitUpdate"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST /www.flatsy.fr/api/v1/business/visit/reschedule <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: */*'</span> <span class="se">\</span>
+  -H <span class="s1">'X-Auth-Token: API_KEY'</span>
+
+</code></pre><pre class="highlight http tab-http"><code><span class="nf">POST</span> <span class="nn">/www.flatsy.fr/api/v1/business/visit/reschedule</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+
+Content-Type: application/json
+Accept: */*
+
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'*/*'</span><span class="p">,</span>
+  <span class="s1">'X-Auth-Token'</span><span class="p">:</span><span class="s1">'API_KEY'</span>
+
+<span class="p">};</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'https://wwww.flatsy.fr/api/v1/business/visit/reschedule'</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'post'</span><span class="p">,</span>
+
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+</code></pre>
+<p><code>POST /api/v1/business/visit/reschedule</code></p>
+
+<p><em>Permet de modifier la date d&#39;une visite. La visite précdénete est annulée, et une nouvelle est créée</em></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-20T14:19:52.607Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="visitupdate-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>visitUpdateData</td>
+<td>body</td>
+<td><a href="#visitreschedulerequest">VisitRescheduleRequest</a></td>
+<td>true</td>
+<td>visit update data</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<h3 id="visitupdate-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -8079,6 +8181,48 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 <tr>
 <td>propertyRef</td>
 <td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSvisitreschedulerequest">VisitRescheduleRequest</h2>
+
+<p><a id="schemavisitreschedulerequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"visitorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"visitId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-20T14:19:52.607Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='properties-32'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>visitorId</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>visitId</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>date</td>
+<td>string(date-time)</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
