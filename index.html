@@ -278,7 +278,7 @@
               </ul>
           </li>
           <li>
-            <a href="#Flatsy-API-businessmessage" class="toc-h1 toc-link" data-title="Messages">Messages</a>
+            <a href="#Flatsy-API-businessmessage" class="toc-h1 toc-link" data-title="Messagerie">Messagerie</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#messages" class="toc-h2 toc-link" data-title="messages">messages</a>
@@ -290,6 +290,9 @@
                     <a href="#save" class="toc-h2 toc-link" data-title="save">save</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#Flatsy-API-businessvisit" class="toc-h1 toc-link" data-title="businessvisit">businessvisit</a>
           </li>
           <li>
             <a href="#Flatsy-API-businessvisit" class="toc-h1 toc-link" data-title="Visit">Visit</a>
@@ -414,6 +417,9 @@
                   </li>
                   <li>
                     <a href="#tocSvisitcreaterequest" class="toc-h2 toc-link" data-title="VisitCreateRequest">VisitCreateRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSvisitslot" class="toc-h2 toc-link" data-title="VisitSlot">VisitSlot</a>
                   </li>
                   <li>
                     <a href="#tocSmessagepost" class="toc-h2 toc-link" data-title="MessagePost">MessagePost</a>
@@ -3087,12 +3093,10 @@ Cette action nécessite d'être authentifié. Consultez la section Authentificat
 api_key
 </aside>
 
-<h1 id="Flatsy-API-businessmessage">Messages</h1>
-
-<p>La messagerie fonctionne bien par bien. Chaque bien donne lieu à une conversation entre l&#39;utilisateur qui confie un bien et les agents de visite qui interviennent sur le bien.</p>
-
-<p><a id="opIdbusinessMessages"></a></p>
+<h1 id="Flatsy-API-businessmessage">Messagerie</h1>
 <h2 id='messages'>messages</h2>
+<p><a id="opIdbusinessMessages"></a></p>
+
 <blockquote>
 <p>Code samples</p>
 </blockquote>
@@ -3590,7 +3594,9 @@ Accept: */*
 </span></code></pre>
 <p><code>GET /api/v1/business/messages/conversation</code></p>
 
-<p><em>Renvoie la conversation à propos d&#39;un bien avec l&#39;agent de visite. Il est nécessaire de préciser soit un id de bien soit une référence client.</em></p>
+<p><em>conversation with a user</em></p>
+
+<p>Renvoie la conversation à propos d&#39;un bien avec l&#39;agent de visite. Il est nécessaire de préciser soit un id de bien soit une référence client.</p>
 
 <h3 id="conversation-parameters">Parameters</h3>
 
@@ -3835,6 +3841,8 @@ Accept: */*
 To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
+
+<h1 id="Flatsy-API-businessvisit">businessvisit</h1>
 
 <h1 id="Flatsy-API-businessvisit">Visit</h1>
 
@@ -7993,9 +8001,49 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 </tr>
 </tbody></table>
 
-<h2 id="tocSmessagepost">MessagePost</h2>
+<h2 id="tocSvisitslot">VisitSlot</h2>
 
-<p>Un des deux champ propertyId ou propertyRef est requis</p>
+<p><a id="schemavisitslot"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"available"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='properties-30'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>date</td>
+<td>string(date-time)</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>available</td>
+<td>boolean</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>score</td>
+<td>number</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSmessagepost">MessagePost</h2>
 
 <p><a id="schemamessagepost"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -8004,7 +8052,7 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
   </span><span class="s2">"propertyRef"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-30'>Properties</h3>
+</span></code></pre><h3 id='properties-31'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -8024,14 +8072,14 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 <tr>
 <td>propertyId</td>
 <td>string(uuid)</td>
-<td>true (ou properyRef)</td>
+<td>false</td>
 <td>none</td>
 <td>none</td>
 </tr>
 <tr>
 <td>propertyRef</td>
 <td>string</td>
-<td>true (ou propertyId)</td>
+<td>false</td>
 <td>none</td>
 <td>none</td>
 </tr>
