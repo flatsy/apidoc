@@ -1072,7 +1072,7 @@ func main() {
     headers := map[string][]string{
         "Accept": []string{"*/*"},
         "X-Auth-Token": []string{"API_KEY"},
-        
+
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
@@ -2153,7 +2153,7 @@ func main() {
     headers := map[string][]string{
         "Accept": []string{"*/*"},
         "X-Auth-Token": []string{"API_KEY"},
-        
+
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
@@ -2315,7 +2315,7 @@ func main() {
     headers := map[string][]string{
         "Accept": []string{"*/*"},
         "X-Auth-Token": []string{"API_KEY"},
-        
+
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
@@ -2517,7 +2517,7 @@ func main() {
     headers := map[string][]string{
         "Accept": []string{"*/*"},
         "X-Auth-Token": []string{"API_KEY"},
-        
+
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
@@ -2695,7 +2695,7 @@ func main() {
         "Content-Type": []string{"application/json"},
         "Accept": []string{"*/*"},
         "X-Auth-Token": []string{"API_KEY"},
-        
+
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
@@ -3874,7 +3874,7 @@ func main() {
 
 `POST /api/v1/business/visit/create`
 
-*Crée une nouvelle demande de visite. Le champ visitorTokenId est facultatif et ne doit pas être utilisé dans la plupart des cas.*
+*Crée une nouvelle demande de visite. Le champ visitorTokenId est facultatif et ne doit pas être utilisé dans la plupart des cas. Attention les dates sont au format UTC*
 
 > Body parameter
 
@@ -3904,6 +3904,84 @@ func main() {
 > 200 Response
 
 <h3 id="visitcreate-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|[Visit](#schemavisit)|
+
+<aside class="warning">
+Cette action nécessite d'être authentifié. Consultez la section Authentification pour plus d'informations.:
+api_key
+</aside>
+
+## visitUpdate
+
+<a id="opIdvisitUpdate"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /www.flatsy.fr/api/v1/business/visit/reschedule \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: */*' \
+  -H 'X-Auth-Token: API_KEY'
+
+```
+
+```http
+POST /www.flatsy.fr/api/v1/business/visit/reschedule HTTP/1.1
+
+Content-Type: application/json
+Accept: */*
+
+```
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'*/*',
+  'X-Auth-Token':'API_KEY'
+
+};
+
+$.ajax({
+  url: 'https://wwww.flatsy.fr/api/v1/business/visit/reschedule',
+  method: 'post',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+```
+
+`POST /api/v1/business/visit/reschedule`
+
+*Permet de modifier la date d'une visite. La visite précdénete est annulée, et une nouvelle est créée*
+
+> Body parameter
+
+```json
+{
+  "visitorId": "string",
+  "visitId": "string",
+  "date": "2018-09-20T14:19:52.607Z"
+}
+```
+
+<h3 id="visitupdate-parameters">Parameters</h3>
+
+Parameter | In | Type | Required | Description
+--- | --- | --- | --- |---
+visitUpdateData | body | <a href="#visitreschedulerequest">VisitRescheduleRequest</a> | true | visit update data
+
+> Example responses
+
+> 200 Response
+
+<h3 id="visitupdate-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -5174,3 +5252,24 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |propertyId|string(uuid)|false|none|none|
 |propertyRef|string|false|none|none|
 
+
+<h2 id="tocSvisitreschedulerequest">VisitRescheduleRequest</h2>
+
+<a id="schemavisitreschedulerequest"></a>
+
+```json
+{
+  "visitorId": "string",
+  "visitId": "string",
+  "date": "2018-09-20T14:19:52.607Z"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|visitorId|string|false|none|none|
+|visitId|string|false|none|none|
+|date|string(date-time)|false|none|none|
