@@ -4000,6 +4000,8 @@ Les évènements sont envoyés avec une requête POST à l'adresse définie, et 
 
 Le champ eventType permet de discerner les différents types d'évènements.
 
+Afin de pouvoir tester les webhooks en cas d'émission de nouveau message, en mode test (host test.flatsy.fr), tout message contenant un "?" recevra une réponse automatique dans la foulée.
+
 
 ## Fin d'une visite et compte rendu
 
