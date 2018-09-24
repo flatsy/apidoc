@@ -5512,6 +5512,8 @@ Le Webhook vous permet de recevoir des évènements WebhookEvent, qui indiquent 
 Les évènements sont envoyés avec une requête POST à l&#39;adresse définie, et au format JSON. Nous attendons une réponse HTTP 200 OK de la part de votre serveur.</p>
 
 <p>Le champ eventType permet de discerner les différents types d&#39;évènements.</p>
+
+<p>Afin de pouvoir tester les webhooks en cas d&#39;émission de nouveau message, en mode test (host test.flatsy.fr), tout message contenant un &quot;?&quot; recevra une réponse automatique dans la foulée.</p>
 <h2 id='fin-d-39-une-visite-et-compte-rendu'>Fin d&#39;une visite et compte rendu</h2>
 <p>Pour chaque visite nous envoyons un code unique au visiteur. Le flatguide saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.</p>
 
