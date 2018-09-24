@@ -955,14 +955,14 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X GET /pacific.flatsy.fr/api/v1/business/property/agent \
+curl -X GET /test.flatsy.fr/api/v1/business/property/agent \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /pacific.flatsy.fr/api/v1/business/property/agent HTTP/1.1
+GET /test.flatsy.fr/api/v1/business/property/agent HTTP/1.1
 
 Accept: */*
 
@@ -976,7 +976,7 @@ var headers = {
 };
 
 $.ajax({
-  url: '/pacific.flatsy.fr/api/v1/business/property/agent',
+  url: '/test.flatsy.fr/api/v1/business/property/agent',
   method: 'get',
 
   headers: headers,
@@ -996,7 +996,7 @@ const headers = {
 
 };
 
-fetch('/pacific.flatsy.fr/api/v1/business/property/agent',
+fetch('/test.flatsy.fr/api/v1/business/property/agent',
 {
   method: 'GET',
 
@@ -1019,7 +1019,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get '/pacific.flatsy.fr/api/v1/business/property/agent',
+result = RestClient.get '/test.flatsy.fr/api/v1/business/property/agent',
   params: {
   }, headers: headers
 
@@ -1034,7 +1034,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('/pacific.flatsy.fr/api/v1/business/property/agent', params={
+r = requests.get('/test.flatsy.fr/api/v1/business/property/agent', params={
 
 }, headers = headers)
 
@@ -1043,7 +1043,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/pacific.flatsy.fr/api/v1/business/property/agent");
+URL obj = new URL("/test.flatsy.fr/api/v1/business/property/agent");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -1076,7 +1076,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/property/agent", data)
+    req, err := http.NewRequest("GET", "/test.flatsy.fr/api/v1/business/property/agent", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2036,14 +2036,14 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X GET /pacific.flatsy.fr/api/v1/business/coverage \
+curl -X GET /test.flatsy.fr/api/v1/business/coverage \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /pacific.flatsy.fr/api/v1/business/coverage HTTP/1.1
+GET /test.flatsy.fr/api/v1/business/coverage HTTP/1.1
 
 Accept: */*
 
@@ -2057,7 +2057,7 @@ var headers = {
 };
 
 $.ajax({
-  url: '/pacific.flatsy.fr/api/v1/business/coverage',
+  url: '/test.flatsy.fr/api/v1/business/coverage',
   method: 'get',
 
   headers: headers,
@@ -2077,7 +2077,7 @@ const headers = {
 
 };
 
-fetch('/pacific.flatsy.fr/api/v1/business/coverage',
+fetch('/test.flatsy.fr/api/v1/business/coverage',
 {
   method: 'GET',
 
@@ -2100,7 +2100,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get '/pacific.flatsy.fr/api/v1/business/coverage',
+result = RestClient.get '/test.flatsy.fr/api/v1/business/coverage',
   params: {
   }, headers: headers
 
@@ -2115,7 +2115,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('/pacific.flatsy.fr/api/v1/business/coverage', params={
+r = requests.get('/test.flatsy.fr/api/v1/business/coverage', params={
 
 }, headers = headers)
 
@@ -2124,7 +2124,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/pacific.flatsy.fr/api/v1/business/coverage");
+URL obj = new URL("/test.flatsy.fr/api/v1/business/coverage");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2157,7 +2157,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/coverage", data)
+    req, err := http.NewRequest("GET", "/test.flatsy.fr/api/v1/business/coverage", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2200,14 +2200,14 @@ La messagerie fonctionne bien par bien. Chaque bien donne lieu à une conversati
 
 ```shell
 # You can also use wget
-curl -X GET /pacific.flatsy.fr/api/v1/business/messages \
+curl -X GET /test.flatsy.fr/api/v1/business/messages \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /pacific.flatsy.fr/api/v1/business/messages HTTP/1.1
+GET /test.flatsy.fr/api/v1/business/messages HTTP/1.1
 
 Accept: */*
 
@@ -2221,7 +2221,7 @@ var headers = {
 };
 
 $.ajax({
-  url: '/pacific.flatsy.fr/api/v1/business/messages',
+  url: '/test.flatsy.fr/api/v1/business/messages',
   method: 'get',
 
   headers: headers,
@@ -2241,7 +2241,7 @@ const headers = {
 
 };
 
-fetch('/pacific.flatsy.fr/api/v1/business/messages',
+fetch('/test.flatsy.fr/api/v1/business/messages',
 {
   method: 'GET',
 
@@ -2264,7 +2264,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get '/pacific.flatsy.fr/api/v1/business/messages',
+result = RestClient.get '/test.flatsy.fr/api/v1/business/messages',
   params: {
   }, headers: headers
 
@@ -2279,7 +2279,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('/pacific.flatsy.fr/api/v1/business/messages', params={
+r = requests.get('/test.flatsy.fr/api/v1/business/messages', params={
 
 }, headers = headers)
 
@@ -2288,7 +2288,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/pacific.flatsy.fr/api/v1/business/messages");
+URL obj = new URL("/test.flatsy.fr/api/v1/business/messages");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2321,7 +2321,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/messages", data)
+    req, err := http.NewRequest("GET", "/test.flatsy.fr/api/v1/business/messages", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2402,14 +2402,14 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X GET /pacific.flatsy.fr/api/v1/business/messages/conversation \
+curl -X GET /test.flatsy.fr/api/v1/business/messages/conversation \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
 
 ```
 
 ```http
-GET /pacific.flatsy.fr/api/v1/business/messages/conversation HTTP/1.1
+GET /test.flatsy.fr/api/v1/business/messages/conversation HTTP/1.1
 
 Accept: */*
 
@@ -2423,7 +2423,7 @@ var headers = {
 };
 
 $.ajax({
-  url: '/pacific.flatsy.fr/api/v1/business/messages/conversation',
+  url: '/test.flatsy.fr/api/v1/business/messages/conversation',
   method: 'get',
 
   headers: headers,
@@ -2443,7 +2443,7 @@ const headers = {
 
 };
 
-fetch('/pacific.flatsy.fr/api/v1/business/messages/conversation',
+fetch('/test.flatsy.fr/api/v1/business/messages/conversation',
 {
   method: 'GET',
 
@@ -2466,7 +2466,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.get '/pacific.flatsy.fr/api/v1/business/messages/conversation',
+result = RestClient.get '/test.flatsy.fr/api/v1/business/messages/conversation',
   params: {
   }, headers: headers
 
@@ -2481,7 +2481,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.get('/pacific.flatsy.fr/api/v1/business/messages/conversation', params={
+r = requests.get('/test.flatsy.fr/api/v1/business/messages/conversation', params={
 
 }, headers = headers)
 
@@ -2490,7 +2490,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/pacific.flatsy.fr/api/v1/business/messages/conversation");
+URL obj = new URL("/test.flatsy.fr/api/v1/business/messages/conversation");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2523,7 +2523,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/pacific.flatsy.fr/api/v1/business/messages/conversation", data)
+    req, err := http.NewRequest("GET", "/test.flatsy.fr/api/v1/business/messages/conversation", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -2568,7 +2568,7 @@ api_key
 
 ```shell
 # You can also use wget
-curl -X POST /pacific.flatsy.fr/api/v1/business/messages/save \
+curl -X POST /test.flatsy.fr/api/v1/business/messages/save \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -H 'X-Auth-Token: API_KEY'
@@ -2576,7 +2576,7 @@ curl -X POST /pacific.flatsy.fr/api/v1/business/messages/save \
 ```
 
 ```http
-POST /pacific.flatsy.fr/api/v1/business/messages/save HTTP/1.1
+POST /test.flatsy.fr/api/v1/business/messages/save HTTP/1.1
 
 Content-Type: application/json
 Accept: */*
@@ -2592,7 +2592,7 @@ var headers = {
 };
 
 $.ajax({
-  url: '/pacific.flatsy.fr/api/v1/business/messages/save',
+  url: '/test.flatsy.fr/api/v1/business/messages/save',
   method: 'post',
 
   headers: headers,
@@ -2617,7 +2617,7 @@ const headers = {
 
 };
 
-fetch('/pacific.flatsy.fr/api/v1/business/messages/save',
+fetch('/test.flatsy.fr/api/v1/business/messages/save',
 {
   method: 'POST',
   body: inputBody,
@@ -2641,7 +2641,7 @@ headers = {
   'X-Auth-Token' => 'API_KEY'
 }
 
-result = RestClient.post '/pacific.flatsy.fr/api/v1/business/messages/save',
+result = RestClient.post '/test.flatsy.fr/api/v1/business/messages/save',
   params: {
   }, headers: headers
 
@@ -2657,7 +2657,7 @@ headers = {
   'X-Auth-Token': 'API_KEY'
 }
 
-r = requests.post('/pacific.flatsy.fr/api/v1/business/messages/save', params={
+r = requests.post('/test.flatsy.fr/api/v1/business/messages/save', params={
 
 }, headers = headers)
 
@@ -2666,7 +2666,7 @@ print r.json()
 ```
 
 ```java
-URL obj = new URL("/pacific.flatsy.fr/api/v1/business/messages/save");
+URL obj = new URL("/test.flatsy.fr/api/v1/business/messages/save");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2700,7 +2700,7 @@ func main() {
     }
 
     data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/pacific.flatsy.fr/api/v1/business/messages/save", data)
+    req, err := http.NewRequest("POST", "/test.flatsy.fr/api/v1/business/messages/save", data)
     req.Header = headers
 
     client := &http.Client{}
@@ -3995,10 +3995,11 @@ api_key
 <a id="webhookintro"></a>
 
 Vous avez la possibilité de définir une adresse de webhook (via la page profil de votre compte et sur demande à team@flatsy.fr).
-Le Webhook vous permet de recevoir des évènements VisitChangeEvent, qui indiquent en temps réel les changements qui ont lieu sur vos visites.
+Le Webhook vous permet de recevoir des évènements WebhookEvent, qui indiquent en temps réel les changements qui ont lieu sur vos visites, ainsi que les nouveaux messages reçus via la messagerie.
 Les évènements sont envoyés avec une requête POST à l'adresse définie, et au format JSON. Nous attendons une réponse HTTP 200 OK de la part de votre serveur.
 
-D'une façon générale l'objet visitchange témoigne de tout changement qui peut avoir lieu sur vos visites.
+Le champ eventType permet de discerner les différents types d'évènements.
+
 
 ## Fin d'une visite et compte rendu
 
@@ -4008,11 +4009,11 @@ Un évènement est envoyé quand la visite passe de l'état confirmé (confirmed
 
 __Attention__ : en moyenne un délai de 2h est nécessaire après la visite pour que l'agent rédige son compte rendu définitif. Il est donc indispensable de mettre en place une stratégie pour éviter d'afficher à vos utilisateurs finaux des comptes rendus temporaires. Vous pouvez par exemple considérer que le compte rendu est un brouillon dans un délai de quelques heures après la visite.
 
-Chaque mise à jour de compte rendu donne lieu à un évènement VisitChangeEvent où seul le champ Visit est renseigné. Il est donc indispensable de mettre à jour les comptes rendus en accord avec ces évènements.
+Chaque mise à jour de compte rendu donne lieu à un évènement WebhookEvent où seul le champ Visit est renseigné. Il est donc indispensable de mettre à jour les comptes rendus en accord avec ces évènements.
 
 Notez qu'il est toujours possible d'accéder aux comptes rendus dans leur dernier état connu en appelant l'endpoint [visit](#opIdvisit) ou [visits](#opIdvisits)
 
-## Liste exhaustive des évènements déclenchant l'envoi d'un VisitChangeEvent
+## Liste exhaustive des évènements déclenchant l'envoi d'un WebhookEvent
 
 |Evenement|Champs envoyés|
 |---|---|
@@ -4038,9 +4039,9 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 
 
-<h2 id="tocSVisitChangeEvent">VisitChangeEvent</h2>
+<h2 id="tocSWebhookEvent">WebhookEvent</h2>
 
-<a id="schemavisitchange"></a>
+<a id="schemawebookevent"></a>
 
 ```json
 {
@@ -4058,14 +4059,16 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|visit|[Visit](#schemavisit)|true|none| la visite dans son état __après__ le changement.|
+|eventType|string|true|none| Le type d'évènement|
+|visit|[Visit](#schemavisit)|false|none| la visite dans son état __après__ le changement.|
 |visitor|[Visitor](#schemavisitor)|false|none|le visiteur concerné par l'évènement si besoin est de le préciser.|
 |status|string|false|none|le nouveau status de la visite si celui-ci a changé.|
 |oldStatus|string|false|none|l'ancien status de la visite si celui-ci a changé.|
 |previousDate|string(date-time)|false|none|la date de l'ancienne visite si cette visite correspond à un changement de date|
 |previousId|string(uuid)|false|none|l'id de l'ancienne visite si cette visite correspond à un changement de date|
+|message|[Message](#schemamessage)|false|none|le message reçu s'il s'agit d'un évènement de message|
 
-#### Enumerated Values
+#### Status des visites possibles
 
 |Property|Value|
 |---|---|
@@ -4078,6 +4081,20 @@ Un changement de date de visite donne lieu à 3 évènements :
 |status|visit.status.cancelled.terminated|
 |status|visit.status.done|
 
+#### Types d'évènements
+
+|eventType|Description|
+|---|---|
+|visit.new.unconfirmed|Nouvelle visite non confirmée|
+|visit.new.confirmed|Visite créée et confirmée|
+|visit.confirmed|Visite confirmée|
+|visit.done|Visite terminée|
+|visit.date.changed|Changement de date de visite|
+|visit.cancelled.agent|Annulation par l'agent|
+|visit.cancelled.owner|Annulation volontaire|
+|visit.cancelled.endofvisits|Annuation pour fin des visites|
+|visit.report.updated|Compte rendu modifié|
+|message.new|Nouveau message|
 
 # Schemas
 
