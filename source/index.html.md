@@ -2188,11 +2188,13 @@ Cette action nécessite d'être authentifié. Consultez la section Authentificat
 api_key
 </aside>
 
-<h1 id="Flatsy-API-businessmessage">Messagerie</h1>
+<h1 id="Flatsy-API-businessmessage">Messages</h1>
 
-## messages
+La messagerie fonctionne bien par bien. Chaque bien donne lieu à une conversation entre l'utilisateur qui confie un bien et les agents de visite qui interviennent sur le bien.
 
 <a id="opIdbusinessMessages"></a>
+
+## messages
 
 > Code samples
 
@@ -2533,9 +2535,8 @@ func main() {
 
 `GET /api/v1/business/messages/conversation`
 
-*conversation with a user*
+*Renvoie la conversation à propos d'un bien avec l'agent de visite. Il est nécessaire de préciser soit un id de bien soit une référence client.*
 
-Renvoie la conversation à propos d'un bien avec l'agent de visite. Il est nécessaire de préciser soit un id de bien soit une référence client.
 
 <h3 id="conversation-parameters">Parameters</h3>
 
@@ -2743,11 +2744,6 @@ func main() {
 To perform this operation, you must be authenticated by means of one of the following methods:
 api_key
 </aside>
-
-
-
-<h1 id="Flatsy-API-businessvisit">businessvisit</h1>
-
 
 
 
@@ -5132,28 +5128,12 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |clientId|string(uuid)|false|none|none|
 |initialDate|string(date-time)|false|none|none|
 
-<h2 id="tocSvisitslot">VisitSlot</h2>
-
-<a id="schemavisitslot"></a>
-
-```json
-{
-  "date": "2018-09-10T16:44:29Z",
-  "available": true,
-  "score": 0
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|date|string(date-time)|false|none|none|
-|available|boolean|true|none|none|
-|score|number|true|none|none|
 
 <h2 id="tocSmessagepost">MessagePost</h2>
+
+
+Un des deux champ propertyId ou propertyRef est requis
+
 
 <a id="schemamessagepost"></a>
 
@@ -5171,6 +5151,6 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |text|string|true|none|none|
-|propertyId|string(uuid)|false|none|none|
-|propertyRef|string|false|none|none|
+|propertyId|string(uuid)|true (ou properyRef)|none|none|
+|propertyRef|string|true (ou propertyId)|none|none|
 
