@@ -1447,7 +1447,7 @@ func main() {
 
 `GET /api/v1/business/property`
 
-*Permet d'obtenir un bien en saisissant sa référence. Les informations renvoyés contiennent notamment le statut du bien (en ligne, terminé, en pause), ainsi que les contraintes de disponibilités pour ce bien (à ne pas confondre avec les disponibilités de visite, qui sont obtenues via l'endpoint [dispos](#))*
+*Permet d'obtenir un bien en saisissant sa référence. Les informations renvoyés contiennent notamment le statut du bien (en ligne, terminé, en pause), ainsi que les contraintes de disponibilités pour ce bien (à ne pas confondre avec les disponibilités de visite, qui sont obtenues via l'endpoint [slots](#opIdslots))*
 
 <h3 id="ownerpropertybyref-parameters">Parameters</h3>
 
@@ -3765,8 +3765,7 @@ const inputBody = '{
     "lastName": "string",
     "phone": "string",
     "fields": {}
-  },
-  "visitorTokenId": "string"
+  }
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -3870,7 +3869,7 @@ func main() {
 
 `POST /api/v1/business/visit/create`
 
-*Crée une nouvelle demande de visite. Le champ visitorTokenId est facultatif et ne doit pas être utilisé dans la plupart des cas. Attention les dates sont au format UTC*
+*Crée une nouvelle demande de visite. Attention les dates sont au format UTC*
 
 > Body parameter
 
@@ -3884,8 +3883,7 @@ func main() {
     "lastName": "string",
     "phone": "string",
     "fields": {}
-  },
-  "visitorTokenId": "string"
+  }
 }
 ```
 
@@ -4605,6 +4603,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 ```json
 {
   "name": "string",
+  "phone": "string",
   "presentation": "string",
   "rating": 0
 }
@@ -4616,6 +4615,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |name|string|true|none|none|
+|phone|string|false|none|none|
 |presentation|string|true|none|none|
 |rating|number(double)|true|none|none|
 
@@ -5206,7 +5206,6 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
     "phone": "string",
     "fields": {}
   },
-  "visitorTokenId": "string",
   "clientId": "string",
   "initialDate": "2018-09-10T16:44:29Z"
 }
@@ -5221,7 +5220,6 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |ref|string|false|none|none|
 |date|string(date-time)|false|none|none|
 |visitor|[Visitor](#schemavisitor)|true|none|none|
-|visitorTokenId|string(uuid)|false|none|none|
 |clientId|string(uuid)|false|none|none|
 |initialDate|string(date-time)|false|none|none|
 
