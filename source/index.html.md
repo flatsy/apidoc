@@ -3501,6 +3501,10 @@ func main() {
 - *visit.status.cancelled.visitor quand le visiteur souhaite annuler*
 - *visit.status.cancelled.owner quand le propriétaire souhaite annuler.*
 
+Le champ *visitorId* correspond à l'email du visiteur.
+
+
+
 > Body parameter
 
 ```json
@@ -5119,7 +5123,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |visitStatus|string|false|none|Visit status|
-|visitorId|string|false|none|none|
+|visitorId|string|true|none|Email du visiteur (champ email de [Visitor](#schemavisitor))|
 |visitId|string(uuid)|true|none|none|
 
 #### Enumerated Values
