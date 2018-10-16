@@ -4922,6 +4922,8 @@ Accept: */*
 <li><em>visit.status.cancelled.owner quand le propriétaire souhaite annuler.</em></li>
 </ul>
 
+<p>Le champ <em>visitorId</em> correspond à l&#39;email du visiteur.</p>
+
 <blockquote>
 <p>Body parameter</p>
 </blockquote>
@@ -7908,9 +7910,9 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 <tr>
 <td>visitorId</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>none</td>
+<td>Email du visiteur (champ email de <a href="#schemavisitor">Visitor</a>)</td>
 </tr>
 <tr>
 <td>visitId</td>
