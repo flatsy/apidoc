@@ -356,7 +356,7 @@
                     <a href="#tocScriterias" class="toc-h2 toc-link" data-title="Criterias">Criterias</a>
                   </li>
                   <li>
-                    <a href="#tocSflatsyinterval" class="toc-h2 toc-link" data-title="FlatsyInterval">FlatsyInterval</a>
+                    <a href="#tocSinterval" class="toc-h2 toc-link" data-title="Interval">Interval</a>
                   </li>
                   <li>
                     <a href="#tocSproperty" class="toc-h2 toc-link" data-title="Property">Property</a>
@@ -1346,7 +1346,7 @@ Accept: */*
 </tr>
 <tr>
 <td>»» visitAvailabilities</td>
-<td>[<a href="#schemaflatsyinterval">FlatsyInterval</a>]</td>
+<td>[<a href="#schemainterval">Interval</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>availabilities</td>
@@ -1362,6 +1362,13 @@ Accept: */*
 <td>»»» end</td>
 <td>string(date-time)</td>
 <td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>»»» isWeeklyRecurring</td>
+<td>boolean</td>
+<td>false</td>
 <td>none</td>
 <td>none</td>
 </tr>
@@ -2396,7 +2403,8 @@ Accept: */*
   "availability": [
     {
       "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "end": "2018-07-09T09:05:00Z",
+      "isWeeklyRecurring": true
     }
   ]
 }'</span><span class="p">;</span>
@@ -2492,6 +2500,9 @@ Accept: */*
 
 <p><em>Met à jour les disponibilités d&#39;une propriété</em></p>
 
+<p>L&#39;objet interval représente un intervalle de temps de disponibilité pour un agent ou pour un bien.
+Le booleen isWeeklyRecurring indique si ce créneau se reporte d&#39;une semaine sur l&#39;autre à partir de sa date de début.</p>
+
 <blockquote>
 <p>Body parameter</p>
 </blockquote>
@@ -2499,7 +2510,8 @@ Accept: */*
   </span><span class="s2">"availability"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-09T09:05:00Z"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-09T09:05:00Z"</span><span class="w">
+      </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-09T09:05:00Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isWeeklyRecurring"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -5515,7 +5527,7 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 
 <p>Afin de pouvoir tester les webhooks en cas d&#39;émission de nouveau message, en mode test (host test.flatsy.fr), tout message contenant un &quot;?&quot; recevra une réponse automatique dans la foulée.</p>
 <h2 id='fin-d-39-une-visite-et-compte-rendu'>Fin d&#39;une visite et compte rendu</h2>
-<p>Pour chaque visite nous envoyons un code unique au visiteur. Le flatguide saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.</p>
+<p>Pour chaque visite nous envoyons un code unique au visiteur. L&#39;agent saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.</p>
 
 <p>Un évènement est envoyé quand la visite passe de l&#39;état confirmé (confirmed) à terminé (done). Lorsque la visite passe à l&#39;état terminé, il est possible que l&#39;agent de visite ait commencé à en rédiger le compte rendu.</p>
 
@@ -5528,50 +5540,68 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 <table><thead>
 <tr>
 <th>Evenement</th>
+<th>Nom technique</th>
 <th>Champs envoyés</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>Nouvelle visite non confirmée</td>
+<td>visit.new.unconfirmed</td>
 <td>visit,visitor,status</td>
 </tr>
 <tr>
-<td>Nouvelle visite directement confirmée (saisie par flatguide ou par flatsy)</td>
+<td>Nouvelle visite directement confirmée (saisie par agent ou par flatsy)</td>
+<td>visit.new.confirmed</td>
 <td>visit, visitor, status</td>
 </tr>
 <tr>
 <td>Visite passe de demandée à confirmée (proposed  -&gt; confirmed)</td>
+<td>visit.confirmed</td>
 <td>visit, status</td>
 </tr>
 <tr>
 <td>Visite terminée</td>
+<td>visit.done</td>
 <td>visit, visitor, status</td>
 </tr>
 <tr>
 <td>Visite change de date</td>
+<td>visit.date.changed</td>
 <td>visit, visitor, previousDate, previousId</td>
 </tr>
 <tr>
-<td>Visite annulée par flatguide</td>
+<td>Visite annulée par agent (pour tous les visiteurs du créneau)</td>
+<td>visit.cancelled.agent</td>
 <td>visit, status (cancelled.flatguide), oldStatus</td>
 </tr>
 <tr>
-<td>Visite annulée par client</td>
+<td>Visite annulée par client (pour tous les visiteurs du créneau)</td>
+<td>visit.cancelled.owner</td>
 <td>visit, status (cancelled.owner), oldStatus</td>
 </tr>
 <tr>
-<td>Visite annulée par visiteur</td>
-<td>visit, visitor, status (cancelled.visitor), oldStatus</td>
+<td>Visite annulée pour un seul visiteur</td>
+<td>visit.cancelled.visitor</td>
+<td>visit, visitor, status, oldStatus</td>
 </tr>
 <tr>
 <td>Visite annulée car bien loué/vendu</td>
+<td>visit.cancelled.endofvisits</td>
 <td>visit, visitor, status (cancelled.terminated), oldStatus</td>
 </tr>
 <tr>
 <td>Compte rendu modifié</td>
+<td>visit.report.updated</td>
+<td>visit</td>
+</tr>
+<tr>
+<td>Nouveau message</td>
+<td>message.new</td>
 <td>visit</td>
 </tr>
 </tbody></table>
+<h3 id='cas-des-annulations-visiteurs'>Cas des annulations visiteurs</h3>
+<p>Attention, quelle que soit la cause de l&#39;annulation pour un visiteur en particulier, l&#39;évènement envoyé est visit.cancelled.visitor. Le statut précis de la visite est à trouver dans le champ status.</p>
 <h3 id='cas-des-changements-de-date'>Cas des changements de date</h3>
 <p>Un changement de date de visite donne lieu à 3 évènements :</p>
 
@@ -6179,12 +6209,16 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 </tr>
 </tbody></table>
 
-<h2 id="tocSflatsyinterval">FlatsyInterval</h2>
+<h2 id="tocSinterval">Interval</h2>
 
-<p><a id="schemaflatsyinterval"></a></p>
+<p>L&#39;objet interval représente un intervalle de temps de disponibilité pour un agent ou pour un bien.
+Le booleen isWeeklyRecurring indique si ce créneau se reporte d&#39;une semaine sur l&#39;autre à partir de sa date de début.</p>
+
+<p><a id="schemainterval"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="w">
+  </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-29T15:35:03Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-11-29T15:35:03Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isWeeklyRecurring"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-9'>Properties</h3>
@@ -6208,6 +6242,13 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 <td>end</td>
 <td>string(date-time)</td>
 <td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>isWeeklyRecurring</td>
+<td>boolean</td>
+<td>false</td>
 <td>none</td>
 <td>none</td>
 </tr>
@@ -6276,7 +6317,8 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
     </span><span class="s2">"visitAvailabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="w">
+        </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isWeeklyRecurring"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"externalRef"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6554,7 +6596,7 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 </tr>
 <tr>
 <td>visitAvailabilities</td>
-<td>[<a href="#schemaflatsyinterval">FlatsyInterval</a>]</td>
+<td>[<a href="#schemainterval">Interval</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>availabilities</td>
@@ -7135,7 +7177,8 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
   </span><span class="s2">"availability"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="w">
+      </span><span class="s2">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-10T16:44:29Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isWeeklyRecurring"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -7152,7 +7195,7 @@ Les évènements sont envoyés avec une requête POST à l&#39;adresse définie,
 </thead><tbody>
 <tr>
 <td>availability</td>
-<td>[<a href="#schemaflatsyinterval">FlatsyInterval</a>]</td>
+<td>[<a href="#schemainterval">Interval</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>availabilities</td>
