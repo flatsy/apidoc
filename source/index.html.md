@@ -622,9 +622,10 @@ Status Code **200**
 |»»» works|string|false|none|none|
 |»»» dpe|string|false|none|none|
 |»»» constructionYear|integer(int32)|false|none|constructionYear|
-|»» visitAvailabilities|[[FlatsyInterval](#schemaflatsyinterval)]|false|none|availabilities|
+|»» visitAvailabilities|[[Interval](#schemainterval)]|false|none|availabilities|
 |»»» start|string(date-time)|true|none|none|
 |»»» end|string(date-time)|true|none|none|
+|»»» isWeeklyRecurring|boolean|false|none|none|
 |»» externalRef|string|false|none|none|
 |»» additionalRefs|[string]|false|none|none|
 |»» pickedVisitorId|string|false|none|none|
@@ -1519,7 +1520,8 @@ const inputBody = '{
   "availability": [
     {
       "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "end": "2018-07-09T09:05:00Z",
+      "isWeeklyRecurring": true
     }
   ]
 }';
@@ -1628,6 +1630,10 @@ func main() {
 
 *Met à jour les disponibilités d'une propriété*
 
+L'objet interval représente un intervalle de temps de disponibilité pour un agent ou pour un bien.
+Le booleen isWeeklyRecurring indique si ce créneau se reporte d'une semaine sur l'autre à partir de sa date de début.
+
+
 > Body parameter
 
 ```json
@@ -1635,7 +1641,8 @@ func main() {
   "availability": [
     {
       "start": "2018-07-09T09:05:00Z",
-      "end": "2018-07-09T09:05:00Z"
+      "end": "2018-07-09T09:05:00Z",
+      "isWeeklyRecurring": true
     }
   ]
 }
@@ -4007,7 +4014,7 @@ Afin de pouvoir tester les webhooks en cas d'émission de nouveau message, en mo
 
 ## Fin d'une visite et compte rendu
 
-Pour chaque visite nous envoyons un code unique au visiteur. Le flatguide saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.
+Pour chaque visite nous envoyons un code unique au visiteur. L'agent saisit ce code sur son app mobile flatsy, ce qui nous permet de tracer la fin de la visite. C’est à ce moment que la visite passe en “done”.
 
 Un évènement est envoyé quand la visite passe de l'état confirmé (confirmed) à terminé (done). Lorsque la visite passe à l'état terminé, il est possible que l'agent de visite ait commencé à en rédiger le compte rendu.
 
@@ -4019,18 +4026,23 @@ Notez qu'il est toujours possible d'accéder aux comptes rendus dans leur dernie
 
 ## Liste exhaustive des évènements déclenchant l'envoi d'un WebhookEvent
 
-|Evenement|Champs envoyés|
-|---|---|
-| Nouvelle visite non confirmée | visit,visitor,status |
-| Nouvelle visite directement confirmée (saisie par flatguide ou par flatsy) | visit, visitor, status |
-| Visite passe de demandée à confirmée (proposed  -> confirmed) | visit, status |
-| Visite terminée | visit, visitor, status | visit, status (done), oldstatus (confirmed) |
-| Visite change de date | visit, visitor, previousDate, previousId |
-| Visite annulée par flatguide | visit, status (cancelled.flatguide), oldStatus |
-| Visite annulée par client | visit, status (cancelled.owner), oldStatus |
-| Visite annulée par visiteur | visit, visitor, status (cancelled.visitor), oldStatus |
-| Visite annulée car bien loué/vendu | visit, visitor, status (cancelled.terminated), oldStatus |
-| Compte rendu modifié | visit |
+|Evenement|Nom technique|Champs envoyés|
+|---|---|---|
+| Nouvelle visite non confirmée | visit.new.unconfirmed |visit,visitor,status |
+| Nouvelle visite directement confirmée (saisie par agent ou par flatsy) |visit.new.confirmed| visit, visitor, status |
+| Visite passe de demandée à confirmée (proposed  -> confirmed) |visit.confirmed| visit, status |
+| Visite terminée |visit.done| visit, visitor, status | visit, status (done), oldstatus (confirmed) |
+| Visite change de date |visit.date.changed| visit, visitor, previousDate, previousId |
+| Visite annulée par agent (pour tous les visiteurs du créneau)|visit.cancelled.agent| visit, status (cancelled.flatguide), oldStatus |
+| Visite annulée par client (pour tous les visiteurs du créneau)|visit.cancelled.owner| visit, status (cancelled.owner), oldStatus |
+| Visite annulée pour un seul visiteur |visit.cancelled.visitor| visit, visitor, status, oldStatus |
+| Visite annulée car bien loué/vendu |visit.cancelled.endofvisits| visit, visitor, status (cancelled.terminated), oldStatus |
+| Compte rendu modifié |visit.report.updated| visit |
+| Nouveau message |message.new| visit |
+
+### Cas des annulations visiteurs
+
+Attention, quelle que soit la cause de l'annulation pour un visiteur en particulier, l'évènement envoyé est visit.cancelled.visitor. Le statut précis de la visite est à trouver dans le champ status.
 
 ### Cas des changements de date
 
@@ -4283,14 +4295,18 @@ Un changement de date de visite donne lieu à 3 évènements :
 |qualification|qualification.solvabilite33.caution|
 |qualification|qualification.solvabilite33|
 
-<h2 id="tocSflatsyinterval">FlatsyInterval</h2>
+<h2 id="tocSinterval">Interval</h2>
 
-<a id="schemaflatsyinterval"></a>
+L'objet interval représente un intervalle de temps de disponibilité pour un agent ou pour un bien.
+Le booleen isWeeklyRecurring indique si ce créneau se reporte d'une semaine sur l'autre à partir de sa date de début.
+
+<a id="schemainterval"></a>
 
 ```json
 {
-  "start": "2018-09-10T16:44:29Z",
-  "end": "2018-09-10T16:44:29Z"
+  "start": "2018-11-29T15:35:03Z",
+  "end": "2018-11-29T15:35:03Z",
+  "isWeeklyRecurring": true
 }
 
 ```
@@ -4301,6 +4317,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 |---|---|---|---|---|
 |start|string(date-time)|true|none|none|
 |end|string(date-time)|true|none|none|
+|isWeeklyRecurring|boolean|false|none|none|
 
 <h2 id="tocSproperty">Property</h2>
 
@@ -4367,7 +4384,8 @@ Un changement de date de visite donne lieu à 3 évènements :
     "visitAvailabilities": [
       {
         "start": "2018-09-10T16:44:29Z",
-        "end": "2018-09-10T16:44:29Z"
+        "end": "2018-09-10T16:44:29Z",
+        "isWeeklyRecurring": true
       }
     ],
     "externalRef": "string",
@@ -4504,7 +4522,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 |picHandles|[string]|false|none|none|
 |picUrls|[string]|false|none|none|
 |fields|[PropertyFields](#schemapropertyfields)|false|none|none|
-|visitAvailabilities|[[FlatsyInterval](#schemaflatsyinterval)]|false|none|availabilities|
+|visitAvailabilities|[[Interval](#schemainterval)]|false|none|availabilities|
 |externalRef|string|false|none|none|
 |additionalRefs|[string]|false|none|none|
 |pickedVisitorId|string|false|none|none|
@@ -4739,6 +4757,8 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 <h2 id="tocSavailabilityupdaterequest">AvailabilityUpdateRequest</h2>
 
+
+
 <a id="schemaavailabilityupdaterequest"></a>
 
 ```json
@@ -4746,7 +4766,8 @@ Un changement de date de visite donne lieu à 3 évènements :
   "availability": [
     {
       "start": "2018-09-10T16:44:29Z",
-      "end": "2018-09-10T16:44:29Z"
+      "end": "2018-09-10T16:44:29Z",
+      "isWeeklyRecurring": true
     }
   ]
 }
@@ -4757,7 +4778,7 @@ Un changement de date de visite donne lieu à 3 évènements :
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|availability|[[FlatsyInterval](#schemaflatsyinterval)]|false|none|availabilities|
+|availability|[[Interval](#schemainterval)]|false|none|availabilities|
 
 <h2 id="tocSpropertystatuschangerequest">PropertyStatusChangeRequest</h2>
 
