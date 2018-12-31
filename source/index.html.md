@@ -630,6 +630,7 @@ Status Code **200**
 |»» pickedVisitorId|string|false|none|none|
 |»» tenantPhone|string|false|none|none|
 |»» extraFields|object|false|none|extraFields|
+|»» metadata|object|false|none|metadata|
 |» createdAt|string(date-time)|false|none|none|
 |» updatedAt|string(date-time)|false|none|none|
 |» ownerContact|[Contact](#schemacontact)|true|none|none|
@@ -869,6 +870,8 @@ func main() {
 
 *Les critères de préqualification doivent être absents ou renseignés conformément à [Préqualification](#schemaprequalification)*
 
+*Il est possible de passer des metadonnées sous forme de clés/valeurs à ce bien via l'attribut metadata, qui pourront être retrouvées par la suite*
+
 > Body parameter
 
 ```json
@@ -928,7 +931,8 @@ func main() {
     "string"
   ],
   "tenantPhone": "string",
-  "extraFields": {}
+  "extraFields": {},
+  "metadata": {}
 }
 ```
 
@@ -3335,6 +3339,7 @@ Status Code **200**
 |»» doorNumber|string|false|none|none|
 |»» rentSell|string|false|none|Property rent or sell|
 |» durationMinutes|integer(int32)|true|none|none|
+|» metadata|object|false|none|metadata|
 
 #### Enumerated Values
 
@@ -3887,6 +3892,8 @@ func main() {
 
 *Crée une nouvelle demande de visite. Attention les dates sont au format UTC*
 
+*Il est possible de passer des metadonnées sous forme de clés/valeurs à cette visite via l'attribut metadata, qui pourront être retrouvées par la suite lorsqu'un objet visite est renvoyé par l'API.*
+
 > Body parameter
 
 ```json
@@ -3898,7 +3905,8 @@ func main() {
     "firstName": "string",
     "lastName": "string",
     "phone": "string",
-    "fields": {}
+    "fields": {},
+    "metadata": {}
   }
 }
 ```
@@ -4985,7 +4993,8 @@ Le ratio correspond au rapport minimum salaire/loyer toléré.
     "string"
   ],
   "tenantPhone": "string",
-  "extraFields": {}
+  "extraFields": {},
+  "metadata": {}
 }
 
 ```
@@ -5007,6 +5016,7 @@ Le ratio correspond au rapport minimum salaire/loyer toléré.
 |additionalRefs|[string]|false|none|none|
 |tenantPhone|string|false|none|none|
 |extraFields|object|false|none|extraFields|
+|metadata|object|false|none|metadata|
 
 #### Enumerated Values
 
@@ -5507,6 +5517,7 @@ Ce modèle implique que certaines méthodes de l'API demandent de préciser le v
 |visitor|[Visitor](#schemavisitor)|true|none|none|
 |clientId|string(uuid)|false|none|none|
 |initialDate|string(date-time)|false|none|none|
+|metadata|object|false|none|none|
 
 
 <h2 id="tocSmessagepost">MessagePost</h2>
